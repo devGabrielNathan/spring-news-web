@@ -1,31 +1,29 @@
 package br.com.news.dto;
 
 import br.com.news.utils.SignatureStatus;
-import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
-public class AuthorRequest {
-    @NotBlank
+@AllArgsConstructor
+@NoArgsConstructor
+public class AuthorPatchRequest {
     private String name;
 
-    @NotBlank
     private String email;
 
-    @NotBlank
     private String password;
 
     private LocalDate birthDate;
 
-    @NotBlank
     private String education;
 
-    @NotBlank
     private String signature;
 
     private SignatureStatus status;
 
-    private boolean isEditor;
+    private Boolean isEditor;
 }
