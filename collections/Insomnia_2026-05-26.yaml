@@ -1,0 +1,180 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: spring-news-api
+meta:
+  id: wrk_251a026df3f948fcb6f6aaaa7e88edc0
+  created: 1779831048973
+  modified: 1779837651634
+  description: ""
+collection:
+  - name: authors
+    meta:
+      id: fld_37e817dc61f8427a9c6f861bfb0bf69a
+      created: 1779837549781
+      modified: 1779837607701
+      sortKey: -1779837549781
+      description: ""
+    children:
+      - url: "{{ _.base }}"
+        name: Get All Authors
+        meta:
+          id: req_de66e09fef204832ab1e23547f06ba9f
+          created: 1779831093010
+          modified: 1779837576410
+          isPrivate: false
+          description: ""
+          sortKey: -1779837567999
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "Spike Spiegel",
+            	"email": "SpikeSpiegel@gmail.com",
+            	"password": "12345678",
+            	"birthDate": "26/06/2044",
+            	"education": "Cowboy Bebop",
+            	"signature": "Whatever happens happens...",
+            	"status": "ESCRITA"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base }}/:id"
+        name: Delete Authors
+        meta:
+          id: req_7d02b269b1bc429e8417530274358256
+          created: 1779835572391
+          modified: 1779837578771
+          isPrivate: false
+          description: ""
+          sortKey: -1779837567799
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+        pathParameters:
+          - name: id
+            value: ""
+      - url: "{{ _.base }}/:id"
+        name: Get Authors By Id
+        meta:
+          id: req_91c7a08b3b344ce78907eeb588d1fae8
+          created: 1779836942264
+          modified: 1779837574712
+          isPrivate: false
+          description: ""
+          sortKey: -1779837567899
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+        pathParameters:
+          - name: id
+            value: ""
+      - url: "{{ _.base }}/:id"
+        name: Update Authors
+        meta:
+          id: req_ed756956b0474c7c91289e09a3e6beb2
+          created: 1779837409949
+          modified: 1779837589127
+          isPrivate: false
+          description: ""
+          sortKey: -1779837567699
+        method: PUT
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+        pathParameters:
+          - name: id
+            value: ""
+      - url: "{{ _.base }}/:id"
+        name: Patch Authors
+        meta:
+          id: req_1dfbeb734ff84d2fbc77433421d46c00
+          created: 1779837420727
+          modified: 1779837591380
+          isPrivate: false
+          description: ""
+          sortKey: -1779837567599
+        method: PATCH
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+        pathParameters:
+          - name: id
+            value: ""
+  - name: news
+    meta:
+      id: fld_e5bb2618f29841e49d46b5e8bfb035a2
+      created: 1779837602519
+      modified: 1779837602519
+      sortKey: -1779837602519
+      description: ""
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_84ca8c4e4c98af34e33d64c0b6101e33f7015129
+    created: 1779831049073
+    modified: 1779831049073
+environments:
+  name: Base Environment
+  meta:
+    id: env_84ca8c4e4c98af34e33d64c0b6101e33f7015129
+    created: 1779831049059
+    modified: 1779837465345
+    isPrivate: false
+  data:
+    base: http://localhost:8080/authors
