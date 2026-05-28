@@ -21,4 +21,7 @@ public class NewsRequest {
     private String content;
 
     private NewsStatus status;
+
+    @NotBlank
+    private Long authorId;
 }
