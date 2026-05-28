@@ -1,18 +1,25 @@
 package br.com.news.mapper;
 
-import br.com.news.dto.AuthorPatchRequest;
 import br.com.news.dto.AuthorRequest;
 import br.com.news.dto.AuthorResponse;
 import br.com.news.entity.Author;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Objects;
 
 @Component
 public class AuthorMapper {
+
+    private final NewsMapper newsMapper;
+
+    @Autowired
+    public AuthorMapper(NewsMapper newsMapper) {
+        this.newsMapper = newsMapper;
+    }
+
     public Author toEntity(AuthorRequest request) {
-        return new Author(
+        Author author = new Author(
                 null,
                 request.getName(),
                 request.getEmail(),
@@ -20,33 +27,13 @@ public class AuthorMapper {
                 request.getBirthDate(),
                 request.getEducation(),
                 request.getSignature(),
-                request.isEditor());
-    }
+                request.isEditor(),
+                null
+        );
 
-    public void updateEntityFromPatch(Author author, AuthorPatchRequest request) {
-        if (Objects.nonNull(request.getName())) {
-            author.setName(request.getName());
-        }
+        author.setNews(newsMapper.toEntityList(request.getNews(), author));
 
-        if (Objects.nonNull(request.getEmail())) {
-            author.setEmail(request.getEmail());
-        }
-
-        if (Objects.nonNull(request.getBirthDate())) {
-            author.setBirthDate(request.getBirthDate());
-        }
-
-        if (Objects.nonNull(request.getEducation())) {
-            author.setEducation(request.getEducation());
-        }
-
-        if (Objects.nonNull(request.getSignature())) {
-            author.setSignature(request.getSignature());
-        }
-        if (Objects.nonNull(request.getIsEditor())) {
-            author.setEditor(request.getIsEditor());
-        }
-
+        return author;
     }
 
     public AuthorResponse toResponse(Author author) {
@@ -57,7 +44,9 @@ public class AuthorMapper {
                 author.getBirthDate(),
                 author.getEducation(),
                 author.getSignature(),
-                author.isEditor());
+                author.isEditor(),
+                newsMapper.toResponseList(author.getNews())
+        );
     }
 
     public List<AuthorResponse> toResponseList(List<Author> authorEntities) {
