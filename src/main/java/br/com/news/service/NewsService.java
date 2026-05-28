@@ -2,10 +2,11 @@ package br.com.news.service;
 
 import java.util.List;
 
+import br.com.news.entity.Author;
+import br.com.news.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.news.dto.NewsPatchRequest;
 import br.com.news.dto.NewsRequest;
 import br.com.news.dto.NewsResponse;
 import br.com.news.entity.News;
@@ -16,11 +17,13 @@ import br.com.news.repository.NewsRepository;
 public class NewsService {
 
     private final NewsRepository newsRepository;
+    private final AuthorRepository authorRepository;
     private final NewsMapper newsMapper;
 
     @Autowired
-    public NewsService(NewsRepository newsRepository, NewsMapper newsMapper) {
+    public NewsService(NewsRepository newsRepository, AuthorRepository authorRepository, NewsMapper newsMapper) {
         this.newsRepository = newsRepository;
+        this.authorRepository = authorRepository;
         this.newsMapper = newsMapper;
     }
 
@@ -33,21 +36,22 @@ public class NewsService {
     }
 
     public NewsResponse create(NewsRequest request) {
-        News news = newsMapper.toEntity(request);
+
+        Author author = authorRepository.findById(request.getAuthorId()).orElseThrow();
+
+        News news = newsMapper.toEntity(request, author);
+
         return newsMapper.toResponse(newsRepository.save(news));
     }
 
     public NewsResponse update(Long id, NewsRequest request) {
         newsRepository.findById(id).orElseThrow();
-        News newsToUpdate = newsMapper.toEntity(request);
+
+        Author author = authorRepository.findById(request.getAuthorId()).orElseThrow();
+
+        News newsToUpdate = newsMapper.toEntity(request, author);
         newsToUpdate.setId(id);
         return newsMapper.toResponse(newsRepository.save(newsToUpdate));
-    }
-
-    public NewsResponse patch(Long id, NewsPatchRequest request) {
-        News news = newsRepository.findById(id).orElseThrow();
-        newsMapper.updateEntityFromPatch(news, request);
-        return newsMapper.toResponse(newsRepository.save(news));
     }
 
     public void delete(Long id) {

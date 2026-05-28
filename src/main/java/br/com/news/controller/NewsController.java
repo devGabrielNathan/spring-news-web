@@ -4,23 +4,19 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import br.com.news.dto.NewsPatchRequest;
 import br.com.news.dto.NewsRequest;
 import br.com.news.dto.NewsResponse;
 import br.com.news.service.NewsService;
 import jakarta.validation.Valid;
 
-@RestController
+@Controller
 @RequestMapping("/news")
 public class NewsController {
 
@@ -41,22 +37,17 @@ public class NewsController {
         return ResponseEntity.ok(newsService.findById(id));
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<NewsResponse> create(@Valid @RequestBody NewsRequest request) {
         return ResponseEntity.ok(newsService.create(request));
     }
 
-    @PutMapping("/{id}")
+    @PostMapping("/{id}/edit")
     public ResponseEntity<NewsResponse> update(@PathVariable Long id, @Valid @RequestBody NewsRequest request) {
         return ResponseEntity.ok(newsService.update(id, request));
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<NewsResponse> patch(@PathVariable Long id, @Valid @RequestBody NewsPatchRequest request) {
-        return ResponseEntity.ok(newsService.patch(id, request));
-    }
-
-    @DeleteMapping("/{id}")
+    @PostMapping("/{id}/delete")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         newsService.delete(id);
         return ResponseEntity.noContent().build();
