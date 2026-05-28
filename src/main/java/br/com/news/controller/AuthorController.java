@@ -5,7 +5,6 @@ import br.com.news.dto.AuthorRequest;
 import br.com.news.dto.AuthorResponse;
 import br.com.news.service.AuthorService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,42 +15,43 @@ import java.util.List;
 @Controller
 @RequestMapping("/authors")
 public class AuthorController {
-    private AuthorService authorService;
+    private final AuthorService authorService;
 
     @Autowired
     public AuthorController(AuthorService authorService) {
         this.authorService = authorService;
     }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<AuthorResponse> getAuthorById(@PathVariable Long id) {
-        return ResponseEntity.ok(authorService.getAuthorById(id));
+    
+    @GetMapping
+    public ResponseEntity<List<AuthorResponse>> findAll() {
+        return ResponseEntity.ok(authorService.findAll());
     }
 
-    @GetMapping
-    public ResponseEntity<List<AuthorResponse>> getAllAuthors() {
-        System.out.println(authorService.getAllAuthors());
-        return ResponseEntity.ok(authorService.getAllAuthors());
+    @GetMapping("/{id}")
+    public ResponseEntity<AuthorResponse> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(authorService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<AuthorResponse> createAuthor(@Valid @RequestBody AuthorRequest authorRequest) {
-        return ResponseEntity.ok(authorService.createAuthor(authorRequest));
+    public ResponseEntity<AuthorResponse> create(@Valid @RequestBody AuthorRequest request) {
+        return ResponseEntity.ok(authorService.create(request));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AuthorResponse> updateAuthor(@PathVariable Long id, @Valid @RequestBody AuthorRequest authorRequest) {
-        return ResponseEntity.ok(authorService.updateAuthor(id, authorRequest));
+    public ResponseEntity<AuthorResponse> update(@PathVariable Long id,
+            @Valid @RequestBody AuthorRequest request) {
+        return ResponseEntity.ok(authorService.update(id, request));
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<AuthorResponse> patchAuthor(@PathVariable Long id, @RequestBody AuthorPatchRequest authorPatchRequest) {
-        return ResponseEntity.ok(authorService.patchAuthor(id, authorPatchRequest));
+    public ResponseEntity<AuthorResponse> patch(@PathVariable Long id,
+            @RequestBody AuthorPatchRequest request) {
+        return ResponseEntity.ok(authorService.patch(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAuthor(@PathVariable Long id) {
-        authorService.deleteAuthor(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        authorService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
