@@ -3,7 +3,7 @@ package br.com.news.mapper;
 import br.com.news.dto.AuthorPatchRequest;
 import br.com.news.dto.AuthorRequest;
 import br.com.news.dto.AuthorResponse;
-import br.com.news.entity.AuthorEntity;
+import br.com.news.entity.Author;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,65 +11,56 @@ import java.util.Objects;
 
 @Component
 public class AuthorMapper {
-    public AuthorEntity toEntity(AuthorRequest authorRequest) {
-        return new AuthorEntity(
+    public Author toEntity(AuthorRequest request) {
+        return new Author(
                 null,
-                authorRequest.getName(),
-                authorRequest.getEmail(),
-                authorRequest.getPassword(),
-                authorRequest.getBirthDate(),
-                authorRequest.getEducation(),
-                authorRequest.getSignature(),
-                authorRequest.getStatus(),
-                authorRequest.isEditor()
-        );
+                request.getName(),
+                request.getEmail(),
+                request.getPassword(),
+                request.getBirthDate(),
+                request.getEducation(),
+                request.getSignature(),
+                request.isEditor());
     }
 
-    public void updateEntityFromPatch(AuthorEntity authorEntity, AuthorPatchRequest authorPatchRequest) {
-        if (Objects.nonNull(authorPatchRequest.getName())) {
-            authorEntity.setName(authorPatchRequest.getName());
+    public void updateEntityFromPatch(Author author, AuthorPatchRequest request) {
+        if (Objects.nonNull(request.getName())) {
+            author.setName(request.getName());
         }
 
-        if (Objects.nonNull(authorPatchRequest.getEmail())) {
-            authorEntity.setEmail(authorPatchRequest.getEmail());
+        if (Objects.nonNull(request.getEmail())) {
+            author.setEmail(request.getEmail());
         }
 
-        if (Objects.nonNull(authorPatchRequest.getBirthDate())) {
-            authorEntity.setBirthDate(authorPatchRequest.getBirthDate());
+        if (Objects.nonNull(request.getBirthDate())) {
+            author.setBirthDate(request.getBirthDate());
         }
 
-        if (Objects.nonNull(authorPatchRequest.getEducation())) {
-            authorEntity.setEducation(authorPatchRequest.getEducation());
+        if (Objects.nonNull(request.getEducation())) {
+            author.setEducation(request.getEducation());
         }
 
-        if (Objects.nonNull(authorPatchRequest.getSignature())) {
-            authorEntity.setSignature(authorPatchRequest.getSignature());
+        if (Objects.nonNull(request.getSignature())) {
+            author.setSignature(request.getSignature());
         }
-        if (Objects.nonNull(authorPatchRequest.getStatus())) {
-            authorEntity.setStatus(authorPatchRequest.getStatus());
-        }
-        if (Objects.nonNull(authorPatchRequest.getIsEditor())) {
-            authorEntity.setEditor(authorPatchRequest.getIsEditor());
+        if (Objects.nonNull(request.getIsEditor())) {
+            author.setEditor(request.getIsEditor());
         }
 
     }
 
-    public AuthorResponse toResponse(AuthorEntity authorEntity) {
+    public AuthorResponse toResponse(Author author) {
         return new AuthorResponse(
-                authorEntity.getId(),
-                authorEntity.getName(),
-                authorEntity.getEmail(),
-                authorEntity.getBirthDate(),
-                authorEntity.getEducation(),
-                authorEntity.getSignature(),
-                authorEntity.getStatus(),
-                authorEntity.isEditor()
-        );
+                author.getId(),
+                author.getName(),
+                author.getEmail(),
+                author.getBirthDate(),
+                author.getEducation(),
+                author.getSignature(),
+                author.isEditor());
     }
 
-
-
-    public List<AuthorResponse> toResponseList(List<AuthorEntity> authorEntities) {
+    public List<AuthorResponse> toResponseList(List<Author> authorEntities) {
         return authorEntities.stream().map(this::toResponse).toList();
     }
 }
