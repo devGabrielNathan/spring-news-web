@@ -27,6 +27,13 @@ public class PublicController {
         List<News> newsList = newsRepository.findNewsByStatusOrderByCreatedAtDesc(NewsStatus.APROVADA);
         model.addAttribute("newsList", newsList);
 
-        return "public/home";
+        return "public/home/index";
+    }
+
+    @GetMapping("/login")
+    public String login(Model model) {
+        model.addAttribute("headTitle", "PostBlog");
+
+        return "public/admin/login/index";
     }
 }
