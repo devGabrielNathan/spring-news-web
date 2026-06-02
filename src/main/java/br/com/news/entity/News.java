@@ -2,11 +2,12 @@ package br.com.news.entity;
 
 import br.com.news.util.NewsStatus;
 import jakarta.persistence.*;
-// import jakarta.persistence.EnumType;
-// import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -30,21 +31,23 @@ public class News {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
-    @Column(nullable = false)
-    // @Enumerated(EnumType.STRING)
-    // private NewsStatus status = NewsStatus.ESCRITA;
-    private NewsStatus status;
+    @Column(nullable = true)
+    @ColumnDefault("'ESCRITA'")
+    @Enumerated(EnumType.STRING)
+    private NewsStatus status = NewsStatus.ESCRITA;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", updatable = false)
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    @UpdateTimestamp
+    @Column(nullable = false)
     private LocalDateTime updatedAt;
 
     @Column(nullable = true, columnDefinition = "TIMESTAMP")
     private LocalDateTime publicatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "author_id")
+    @JoinColumn(nullable = false, name = "author_id")
     private Author author;
 }

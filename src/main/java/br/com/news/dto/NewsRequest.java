@@ -2,6 +2,7 @@ package br.com.news.dto;
 
 import br.com.news.util.NewsStatus;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,6 @@ public class NewsRequest {
 
     private NewsStatus status;
 
-    @NotBlank
+    @NotNull
     private Long authorId;
 }

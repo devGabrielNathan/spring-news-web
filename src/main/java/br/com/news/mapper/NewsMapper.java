@@ -13,17 +13,17 @@ import br.com.news.entity.News;
 public class NewsMapper {
 
     public News toEntity(NewsRequest request, Author author) {
-        return new News(
-                null,
-                request.getTitle(),
-                request.getResume(),
-                request.getContent(),
-                request.getStatus(),
-                null,
-                null,
-                null,
-                author
-            );
+        News news = new News();
+
+        news.setTitle(request.getTitle());
+        news.setResume(request.getResume());
+        news.setContent(request.getContent());
+        news.setAuthor(author);
+
+        if (request.getStatus() != null) {
+            news.setStatus(request.getStatus());
+        }
+        return news;
     }
 
     public List<News> toEntityList(List<NewsRequest> news, Author author) {
@@ -40,7 +40,8 @@ public class NewsMapper {
                 news.getStatus(),
                 news.getCreatedAt(),
                 news.getUpdatedAt(),
-                news.getPublicatedAt()
+                news.getPublicatedAt(),
+                news.getAuthor().getId()
             );
     }
 
