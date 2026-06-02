@@ -21,6 +21,6 @@ public class AuthorController {
     public String login(Model model) {
         model.addAttribute("headTitle", "PostBlog");
 
-        return "public/admin/login/index";
+        return "admin/login/index";
     }
 }

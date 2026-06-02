@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head th:replace="~{fragments/head :: head(
+    title=~{::title},
+    links=~{::link}
+)}">
+    <title>PostBlog - Login</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}"/>
+</head>
+<body>
+    <header th:replace="~{fragments/navbar}"></header>
+    <main class="flex-center">
+        <div class="content-wrapper-size flex-column flex-center">
+            <form th:action="@{/login}" th:method="post" class="flex-column flex-center">
+                <div class="flex-column flex-center">
+                    <h1 class="heading">Painel Administrativo</h1>
+                </div>
+
+                <div th:if="${param.error}" class="alert-error">
+                    <p>Credenciais inválidas. Por favor, tente novamente.</p>
+                </div>
+
+                <input type="email" name="email" id="email" placeholder="Email" required>
+                <input type="password" name="password" id="password" placeholder="Senha" required>
+                <button class="btn-primary" type="submit">Entrar</button>
+            </form>
+        </div>
+    </main>
+    <footer th:replace="~{fragments/footer}"></footer>
+</body>
+</html>
