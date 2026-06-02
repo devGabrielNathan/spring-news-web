@@ -1,31 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/layout">
+
+<head th:replace="~{fragments/head :: head(
+    title=~{::title},
+    links=~{::link}
+)}">
+    <title>PostBlog</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}"/>
 </head>
+
 <body class="home-page">
-<header th:replace="fragments/navbar"></header>
-
-<section class="home-hero content-wrapper-size">
-    <div class="home-hero-copy">
-        <h1>Últimas notícias publicadas</h1>
-    </div>
-</section>
-
-<section class="home-feed content-wrapper-size">
+    <header th:replace="fragments/navbar"></header>
 
     <main>
-        <th:block th:if="${newsList != null and !newsList.isEmpty()}">
-            <th:block th:each="news : ${newsList}">
-                <div th:replace="~{fragments/news-card :: card(${news})}"></div>
-            </th:block>
-        </th:block>
+        <section class="home-hero content-wrapper-size">
+            <div class="home-hero-copy">
+                <h1>Últimas notícias publicadas</h1>
+            </div>
+        </section>
 
-        <p class="text-regular empty-state" th:if="${newsList == null or newsList.isEmpty()}">
-            Ainda não há notícias publicadas para exibir.
-        </p>
+        <section class="home-feed content-wrapper-size">
+
+            <div>
+                <th:block th:if="${newsList != null and !newsList.isEmpty()}">
+                    <th:block th:each="news : ${newsList}">
+                        <div th:replace="~{fragments/news-card :: card(${news})}"></div>
+                    </th:block>
+                </th:block>
+
+                <p class="text-regular empty-state" th:if="${newsList == null or newsList.isEmpty()}">
+                    Ainda não há notícias publicadas para exibir.
+                </p>
+            </div>
+        </section>
     </main>
-</section>
 
-<footer th:replace="fragments/footer"></footer>
+    <footer th:replace="fragments/footer"></footer>
 </body>
+
 </html>
