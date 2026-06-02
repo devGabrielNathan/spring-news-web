@@ -4,7 +4,10 @@ import java.util.List;
 
 import br.com.news.entity.Author;
 import br.com.news.repository.AuthorRepository;
+import br.com.news.util.NewsStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.news.dto.NewsRequest;
@@ -57,4 +60,9 @@ public class NewsService {
     public void delete(Long id) {
         newsRepository.deleteById(id);
     }
+
+    public List<News> findByStatusOrderByPublicatedAtDesc(NewsStatus status, Pageable pageable){
+        return newsRepository.findByStatusOrderByPublicatedAtDesc(status, pageable).getContent();
+    }
+
 }

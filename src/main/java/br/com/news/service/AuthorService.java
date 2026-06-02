@@ -20,7 +20,7 @@ public class AuthorService {
         this.authorRepository = authorRepository;
         this.authorMapper = authorMapper;
     }
-    
+
     public List<AuthorResponse> findAll() {
         List<Author> authorEntities = authorRepository.findAll();
         return authorMapper.toResponseList(authorEntities);
@@ -30,7 +30,7 @@ public class AuthorService {
         Author author = authorRepository.findById(id).orElseThrow();
         return authorMapper.toResponse(author);
     }
-    
+
     public AuthorResponse create(AuthorRequest request) {
         if (authorRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("");
