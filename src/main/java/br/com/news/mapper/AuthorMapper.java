@@ -31,7 +31,9 @@ public class AuthorMapper {
                 null
         );
 
-        author.setNews(newsMapper.toEntityList(request.getNews(), author));
+        if (request.getNews() != null) {
+            author.setNews(newsMapper.toEntityList(request.getNews(), author));
+        }
 
         return author;
     }
