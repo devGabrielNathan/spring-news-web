@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head th:replace="fragments/layout"></head>
+<body class="news-detail-page">
+<header th:replace="fragments/navbar"></header>
+
+<main class="news-detail content-wrapper-size">
+    <section class="news-detail-card">
+        <h1 th:text="${news.title}"></h1>
+        <p class="text-regular news-detail-resume" th:text="${news.resume}"></p>
+
+        <div class="news-detail-meta">
+            <small th:text="${author.signature}"></small>
+            <small th:text="${#temporals.format(news.createdAt, 'dd/MM/yyyy')}"></small>
+        </div>
+
+        <article class="text-regular news-detail-content" th:text="${news.content}"></article>
+
+        <div class="news-detail-actions">
+            <a class="text-regular" th:href="@{/news}">Voltar para notícias</a>
+        </div>
+    </section>
+</main>
+
+<footer th:replace="fragments/footer"></footer>
+</body>
+</html>

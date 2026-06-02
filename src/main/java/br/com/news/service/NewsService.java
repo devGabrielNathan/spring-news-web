@@ -6,7 +6,6 @@ import br.com.news.entity.Author;
 import br.com.news.repository.AuthorRepository;
 import br.com.news.util.NewsStatus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 

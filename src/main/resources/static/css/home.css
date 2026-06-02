@@ -1,0 +1,58 @@
+.home-hero {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    animation: fadeUp 0.55s ease both;
+}
+
+.home-hero-copy,
+.home-feed {
+    font-family: inherit;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(130, 147, 153, 0.18);
+    background: #fff;
+}
+
+.home-hero-copy {
+    padding: 1.25rem;
+    text-align: left;
+    margin-top: 0.5rem;
+}
+
+.home-hero-copy h1 {
+    padding: 0;
+    justify-content: flex-start;
+    font-size: clamp(1.9rem, 3vw, 2.5rem);
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+    color: var(--primary-color);
+}
+
+.home-hero-copy p {
+    color: #4b5563;
+    font-size: 1rem;
+}
+
+.home-feed {
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.55s ease 0.1s both;
+}
+
+.home-page h1 {
+    padding: 4rem 0 4rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

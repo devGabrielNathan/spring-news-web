@@ -1,0 +1,7 @@
+<div th:fragment="card(news)" class="card-news">
+    <h2 th:text="${news.title}"></h2>
+    <p th:text="${news.resume}"></p>
+    <small th:text="${news.author.signature}"></small>
+    <small th:text="${#temporals.format(news.publicatedAt, 'dd/MM/yyyy')}"></small>
+    <a th:href="@{/news/{id}(id=${news.id})}">Leia mais</a>
+</div>

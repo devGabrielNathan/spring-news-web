@@ -2,19 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/layout">
 </head>
-<body>
-    <header th:replace="fragments/navbar"></header>
-    <h1>Últimas Notícias</h1>
+<body class="home-page">
+<header th:replace="fragments/navbar"></header>
+
+<section class="home-hero content-wrapper-size">
+    <div class="home-hero-copy">
+        <h1>Últimas notícias publicadas</h1>
+    </div>
+</section>
+
+<section class="home-feed content-wrapper-size">
 
     <main>
-        <div th:each="news : ${newsList}" class="card-news">
-            <h2 th:text="${news.titulo}"></h2>
-            <p th:text="${news.resumo}"></p>
-            <small th:text="${news.redator.assinatura}"></small>
-            <small th:text="${#temporals.format(news.dataCriacao, 'dd/MM/yyyy')}"></small>
-            <a th:href="@{/news/{id}(id=${news.id})}">Leia mais</a>
-        </div>
+        <th:block th:if="${newsList != null and !newsList.isEmpty()}">
+            <th:block th:each="news : ${newsList}">
+                <div th:replace="~{fragments/news-card :: card(${news})}"></div>
+            </th:block>
+        </th:block>
+
+        <p class="text-regular empty-state" th:if="${newsList == null or newsList.isEmpty()}">
+            Ainda não há notícias publicadas para exibir.
+        </p>
     </main>
-    <footer th:replace="fragments/footer"></footer>
+</section>
+
+<footer th:replace="fragments/footer"></footer>
 </body>
 </html>
