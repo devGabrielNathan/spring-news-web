@@ -8,7 +8,7 @@
         </h2>
 
         <div th:if="${isAuthenticated}" class="nav-links">
-            <a class="text-regular" href="/admin/news">Painel</a>
+            <a class="text-regular" href="/admin">Painel</a>
             <a class="text-regular" href="/logout">Sair</a>
         </div>
         <a th:unless="${isAuthenticated}" class="text-regular" href="/login">Entrar</a>
