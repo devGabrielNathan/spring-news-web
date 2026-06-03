@@ -41,12 +41,20 @@ public class NewsMapper {
                 news.getCreatedAt(),
                 news.getUpdatedAt(),
                 news.getPublicatedAt(),
-                news.getAuthor().getId()
-            );
+                news.getAuthor().getId());
     }
 
     public List<NewsResponse> toResponseList(List<News> news) {
         return news.stream()
                 .map(this::toResponse).toList();
+    }
+
+    public NewsRequest toRequest(NewsResponse response) {
+        return new NewsRequest(
+                response.getTitle(),
+                response.getResume(),
+                response.getContent(),
+                response.getStatus(),
+                response.getAuthor());
     }
 }
