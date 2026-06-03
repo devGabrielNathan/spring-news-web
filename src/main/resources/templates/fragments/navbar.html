@@ -1,16 +1,39 @@
 <header>
-    <nav class="mavbar">
-        <div id="navbar-menu">
-            <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M1 12C1 11.4477 1.44772 11 2 11H22C22.5523 11 23 11.4477 23 12C23 12.5523 22.5523 13 22 13H2C1.44772 13 1 12.5523 1 12Z" fill="#ffffff"></path> <path d="M1 4C1 3.44772 1.44772 3 2 3H22C22.5523 3 23 3.44772 23 4C23 4.55228 22.5523 5 22 5H2C1.44772 5 1 4.55228 1 4Z" fill="#ffffff"></path> <path d="M1 20C1 19.4477 1.44772 19 2 19H22C22.5523 19 23 19.4477 23 20C23 20.5523 22.5523 21 22 21H2C1.44772 21 1 20.5523 1 20Z" fill="#ffffff"></path> </g></svg>
+    <div class="navbar-container">
+        <div class="navbar-brand">
+            <a href="/">
+                <i class="fa-solid fa-book-open brand-icon"></i>
+                <span class="brand-text">PostBlog</span>
+            </a>
         </div>
-        <h2 class="heading">
-            <a id="site-name" href="/">Post Blog</a>
-        </h2>
 
-        <div th:if="${isAuthenticated}" class="nav-links">
-            <a class="text-regular" href="/admin">Painel</a>
-            <a class="text-regular" href="/logout">Sair</a>
+        <div class="nav-links desktop-only">            
+            <div th:if="${isAuthenticated}" class="auth-group">
+                <a class="nav-link-btn" href="/admin"><i class="fa-solid fa-chart-line"></i>Painel</a>
+                <span class="nav-divider"></span>
+                <a class="nav-link-btn-danger" href="/logout"><i class="fa-solid fa-right-from-bracket"></i>Sair</a>
+            </div> 
+            <a th:unless="${isAuthenticated}" class="nav-link-btn" href="/login">Entrar</a>
         </div>
-        <a th:unless="${isAuthenticated}" class="text-regular" href="/login">Entrar</a>
-    </nav>
+
+        <button id="navbar-toggle" class="mobile-only" aria-label="Abrir menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+    </div>
+
+    <div id="mobile-menu" class="mobile-menu mobile-only">
+        <nav class="mobile-nav">
+            <a class="mobile-nav-link" href="/"><i class="fa-solid fa-house"></i> Início</a>
+            <div class="mobile-nav-divider"></div>
+            
+            <div th:if="${isAuthenticated}" class="mobile-auth-group">
+                <a class="mobile-nav-link" href="/admin"><i class="fa-solid fa-chart-line"></i> Painel</a>
+                <a class="mobile-nav-link mobile-logout" href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
+            </div>
+            <a th:unless="${isAuthenticated}" class="mobile-nav-link mobile-login" href="/login"><i class="fa-solid fa-right-to-bracket"></i> Entrar</a>
+        </nav>
+    </div>
+    <div id="mobile-menu-overlay" class="mobile-menu-overlay mobile-only"></div>
 </header>
