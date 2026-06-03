@@ -9,62 +9,67 @@
     <link rel="stylesheet" th:href="@{/css/admin.css}">
 </head>
 
-<body>
+<body class="admin-body">
+    <div class="admin-layout">
+        <aside th:replace="~{fragments/navbar-admin :: navbar-admin(activePage='news')}"></aside>
 
-    <div class="admin-container">
-        <main>
-            <div class="content-wrapper-size admin admin-header">
-                <div class="header-content flex-row align-center gap-sm">
-                    <a th:href="@{/admin/news}" class="back-link">
-                        <i class="fa-solid fa-arrow-left"></i>
-                    </a>
-                    <h1 class="heading" th:text="${newsId != null} ? 'Atualizar Notícia' : 'Criar Notícia'">Criar Notícia</h1>
-                </div>
+        <div class="admin-main-content">
+            <div class="admin-container">
+                <main>
+                    <div class="content-wrapper-size admin admin-header">
+                        <div class="header-content flex-row align-center gap-sm">
+                            <a th:href="@{/admin/news}" class="back-link">
+                                <i class="fa-solid fa-arrow-left"></i>
+                            </a>
+                            <h1 class="heading" th:text="${newsId != null} ? 'Atualizar Notícia' : 'Criar Notícia'">Criar Notícia</h1>
+                        </div>
+                    </div>
+
+                    <article class="content-wrapper-size admin admin-content-card">
+
+                        <div th:if="${error}" class="alert-error-message">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <span th:text="${error}">Erro ao salvar notícia</span>
+                        </div>
+
+                        <form th:action="${newsId != null} ? @{/admin/news/update(id=${newsId})} : @{/admin/news/create}" 
+                              th:object="${news}" 
+                              method="POST" 
+                              class="admin-form">
+                            
+                            <input type="hidden" th:field="*{authorId}" />
+
+                            <div class="form-group">
+                                <label for="title">Título</label>
+                                <input type="text" th:field="*{title}" id="title" placeholder="Insira o título da notícia" required>
+                                <div class="field-error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Erro no título</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="resume">Resumo</label>
+                                <textarea th:field="*{resume}" id="resume" placeholder="Insira uma breve descrição/resumo da notícia" rows="3" required></textarea>
+                                <div class="field-error" th:if="${#fields.hasErrors('resume')}" th:errors="*{resume}">Erro no resumo</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="content">Conteúdo</label>
+                                <textarea th:field="*{content}" id="content" placeholder="Insira o conteúdo completo da notícia" rows="10" required></textarea>
+                                <div class="field-error" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Erro no conteúdo</div>
+                            </div>
+
+                            <div class="form-actions">
+                                <a th:href="@{/admin/news}" class="btn-secondary">Cancelar</a>
+                                <button type="submit" class="btn-primary">
+                                    <i class="fa-solid fa-save"></i> Salvar
+                                </button>
+                            </div>
+                        </form>
+                    </article>
+                </main>
             </div>
 
-            <article class="content-wrapper-size admin admin-content-card">
-
-                <div th:if="${error}" class="alert-error-message">
-                    <i class="fa-solid fa-circle-exclamation"></i>
-                    <span th:text="${error}">Erro ao salvar notícia</span>
-                </div>
-
-                <form th:action="${newsId != null} ? @{/admin/news/update(id=${newsId})} : @{/admin/news/create}" 
-                      th:object="${news}" 
-                      method="POST" 
-                      class="admin-form">
-                    
-                    <input type="hidden" th:field="*{authorId}" />
-
-                    <div class="form-group">
-                        <label for="title">Título</label>
-                        <input type="text" th:field="*{title}" id="title" placeholder="Insira o título da notícia" required>
-                        <div class="field-error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Erro no título</div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="resume">Resumo</label>
-                        <textarea th:field="*{resume}" id="resume" placeholder="Insira uma breve descrição/resumo da notícia" rows="3" required></textarea>
-                        <div class="field-error" th:if="${#fields.hasErrors('resume')}" th:errors="*{resume}">Erro no resumo</div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="content">Conteúdo</label>
-                        <textarea th:field="*{content}" id="content" placeholder="Insira o conteúdo completo da notícia" rows="10" required></textarea>
-                        <div class="field-error" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Erro no conteúdo</div>
-                    </div>
-
-                    <div class="form-actions">
-                        <a th:href="@{/admin/news}" class="btn-secondary">Cancelar</a>
-                        <button type="submit" class="btn-primary">
-                            <i class="fa-solid fa-save"></i> Salvar
-                        </button>
-                    </div>
-                </form>
-            </article>
-        </main>
+        </div>
     </div>
-
 </body>
 
 </html>
