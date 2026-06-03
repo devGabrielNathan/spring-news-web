@@ -2,7 +2,6 @@ services:
   db:
     image: mysql:8.2
     container_name: mysql-spring-news-web
-    restart: always
     environment:
       MYSQL_DATABASE: news
       MYSQL_ROOT_PASSWORD: admin
