@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
-<head th:replace="fragments/head"></head>
+<head th:replace="~{fragments/head :: head(
+    title=~{::title},
+    links=~{::link}
+)}">
+    <title th:text="${news.title}"></title>
+    <link rel="stylesheet" th:href="@{/css/home.css}"/>
+</head>
 <body class="news-detail-page">
 <header th:replace="fragments/navbar"></header>
 
