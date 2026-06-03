@@ -1,0 +1,46 @@
+<aside th:fragment="navbar-admin(activePage)" class="admin-sidebar no-transition" id="adminSidebar">
+
+    <script>
+        (function () {
+            const isCollapsed = localStorage.getItem('sidebar-collapsed') === 'true';
+            if (isCollapsed) {
+                const aside = document.currentScript ? document.currentScript.parentElement : document.getElementById('adminSidebar');
+                if (aside) {
+                    aside.classList.add('collapsed');
+                }
+            }
+        })();
+    </script>
+
+    <div class="sidebar-header">
+        <div class="sidebar-logo">
+            <i class="fa-solid fa-chart-line"></i>
+            <span class="logo-text">Painel</span>
+        </div>
+        <div class="sidebar-subtitle">Gestão de Conteúdo</div>
+    </div>
+
+    <nav class="sidebar-nav">
+        <a th:href="@{/admin/news}" class="sidebar-link" th:classappend="${activePage == 'news' ? 'active' : ''}">
+            <i class="fa-solid fa-newspaper"></i>
+            <span>Gerenciar Notícias</span>
+        </a>
+        <a th:href="@{/admin/authors}" class="sidebar-link" th:classappend="${activePage == 'authors' ? 'active' : ''}">
+            <i class="fa-solid fa-users"></i>
+            <span>Gerenciar Autores</span>
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <button type="button" class="sidebar-toggle-btn" id="sidebarToggle">
+            <i class="fa-solid fa-chevron-left toggle-icon"></i>
+        </button>
+        <hr class="sidebar-divider">
+        <a th:href="@{/logout}" class="sidebar-link logout-link">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Sair</span>
+        </a>
+    </div>
+
+    <script th:src="@{/js/navbar-admin.js}"></script>
+</aside>

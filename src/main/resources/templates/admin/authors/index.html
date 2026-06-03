@@ -1,10 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 
+<head th:replace="~{fragments/head :: head(
+    title=~{::title},
+    links=~{::link}
+)}">
+    <title>Gerenciar Autores - PostBlog</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+
+<body class="admin-body">
+    <div class="admin-layout">
+        <aside th:replace="~{fragments/navbar-admin :: navbar-admin(activePage='authors')}"></aside>
+
+        <div class="admin-main-content">
+            <div class="admin-container">
+                <main>
+                    <div class="content-wrapper-size admin admin-header">
+                        <div class="header-content">
+                            <h1 class="heading">Gerenciar Autores</h1>
+                            <p class="text-small sub-heading">Gerencie os autores e administradores do sistema.</p>
+                        </div>
+                    </div>
+
+                    <article class="content-wrapper-size admin admin-content-card">
+                        <div class="flex-row flex-between title-row">
+                            <h2 class="heading table-title">Lista de Autores</h2>
+                        </div>
+                        <p class="text-small section-desc">Os recursos para adicionar, editar e excluir autores estarão disponíveis em breve.</p>
+                        
+                        <div class="empty-state-container" style="padding: 4rem 2rem;">
+                            <i class="fas fa-users-cog empty-icon" style="font-size: 3rem; color: #cbd5e1; margin-bottom: 1rem;"></i>
+                            <p style="color: var(--text-muted);">Área de gerenciamento de autores em desenvolvimento.</p>
+                        </div>
+                    </article>
+                </main>
+            </div>
+
+        </div>
+    </div>
 </body>
+
 </html>

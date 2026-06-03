@@ -48,6 +48,11 @@ public class AdminController {
         return "admin/news/index";
     }
 
+    @GetMapping("/admin/authors")
+    public String adminAuthors(Model model) {
+        return "admin/authors/index";
+    }
+
     @GetMapping("/admin/news/create")
     public String createForm(Model model, @AuthenticationPrincipal Author currentUser) {
 
