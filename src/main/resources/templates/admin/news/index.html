@@ -1,10 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 
+<head th:replace="~{fragments/head :: head(
+    title=~{::title},
+    links=~{::link}
+)}">
+    <title>Gerenciar Noticias - PostBlog</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+
+<body>
+    <header th:replace="~{fragments/navbar}"></header>
+
+    <div class="admin-container">
+        <main>
+            <div class="content-wrapper-size admin admin-header">
+                <div class="header-content">
+                    <h1 class="heading">Bem vindo, <span th:if="${currentUser != null}" th:text="${currentUser.name}">Administrador</span><span th:unless="${currentUser != null}">Administrador</span>!</h1>
+                    <p class="text-small sub-heading">Esta é a página de administração do site.</p>
+                    <p class="text-small sub-heading">Você pode gerenciar as noticias na tabela abaixo.</p>
+                </div>
+            </div>
+
+            <article class="content-wrapper-size admin admin-content-card">
+                <div class="flex-row flex-between title-row">
+                    <h2 class="heading table-title">Gerenciar Noticias</h2>
+                    <a class="btn-primary" th:href="@{/admin/news/create}">
+                        <i class="fas fa-plus"></i> Criar Novidade
+                    </a>
+                </div>
+                <p class="text-small section-desc">Crie, edite ou remova novidades do site.</p>
+                
+                <div class="table-wrapper">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Descrição</th>
+                                <th class="actions-header">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="news : ${newsList}" class="table-row-animate">
+                                <td class="title-cell" th:text="${news.title}">Título da Novidade</td>
+                                <td class="desc-cell" th:text="${news.resume}">Resumo da descrição</td>
+                                <td class="actions-cell">
+                                    <div class="actions-group">
+                                        <a th:href="@{/admin/news/update(id=${news.id})}" class="action-btn edit-btn" title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a th:href="@{/admin/news/delete(id=${news.id})}" class="action-btn delete-btn" title="Excluir"
+                                           onclick="return confirm('Tem certeza que deseja excluir esta novidade?');">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(newsList)}">
+                                <td colspan="3" class="empty-table-message">
+                                    <div class="empty-state-container">
+                                        <i class="fas fa-newspaper empty-icon"></i>
+                                        <p>Nenhuma novidade cadastrada.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+        </main>
+    </div>
+
+    <footer th:replace="~{fragments/footer}"></footer>
 </body>
+
 </html>

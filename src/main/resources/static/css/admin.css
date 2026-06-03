@@ -1,0 +1,268 @@
+/* Styling for Admin Dashboard */
+
+/* Variables */
+:root {
+    --table-header-bg: #f8fafc;
+    --table-row-hover: #f1f5f9;
+    --border-color: rgba(130, 147, 153, 0.18);
+    --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.admin-container {
+    padding: 2.5rem 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Header Banner styling */
+.admin-header {
+    background: var(--secondary-color);
+    padding: 2.5rem 3rem;
+    border-radius: 1rem;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.admin-header .heading {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.025em;
+    color: var(--primary-text-color);
+}
+
+.admin-header .sub-heading {
+    color: var(--primary-text-color);
+    font-size: 0.95rem;
+    margin-top: 0.25rem;
+}
+
+/* Content Card styling */
+.admin-content-card {
+    background: #ffffff;
+    border-radius: 1rem;
+    padding: 2.5rem;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
+}
+
+.title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.table-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.section-desc {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+}
+
+/* Button styles */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--primary-color);
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    text-decoration: none;
+}
+
+.btn-primary:hover {
+    opacity: 0.8;
+}
+
+/* Table wrapper and Table design */
+.table-wrapper {
+    overflow-x: auto;
+    border-radius: 0.75rem;
+    border: 1px solid var(--border-color);
+    margin-top: 1.5rem;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.95rem;
+}
+
+.admin-table th {
+    background-color: var(--table-header-bg);
+    color: #475569;
+    font-weight: 600;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+}
+
+.admin-table td {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    color: #334155;
+    vertical-align: middle;
+}
+
+.table-row-animate {
+    transition: background-color 0.2s ease;
+}
+
+.table-row-animate:hover {
+    background-color: var(--table-row-hover);
+}
+
+.admin-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Title and description cell sizes */
+.title-cell {
+    font-weight: 600;
+    color: #0f172a;
+    width: 30%;
+}
+
+.desc-cell {
+    color: #475569;
+    max-width: 450px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.actions-header {
+    text-align: center;
+    width: 150px;
+}
+
+.actions-cell {
+    text-align: center;
+}
+
+.actions-group {
+    display: inline-flex;
+    gap: 0.75rem;
+    justify-content: center;
+}
+
+/* Action button icons styling */
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.edit-btn {
+    background-color: var(--secondary-color);
+    color: var(--primary-text-color);
+}
+
+.edit-btn:hover {
+    background-color: var(--secondary-color);
+    color: #ffffff;
+    transform: scale(1.05);
+}
+
+.delete-btn {
+    background-color: var(--danger-color);
+    color: var(--primary-text-color);
+}
+
+.delete-btn:hover {
+    transform: scale(1.05);
+    opacity: 0.8;
+}
+
+/* Empty State styling */
+.empty-table-message {
+    text-align: center;
+    padding: 4rem 2rem !important;
+    color: var(--text-muted);
+}
+
+.empty-state-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.empty-icon {
+    font-size: 3rem;
+    color: #cbd5e1;
+}
+
+/* Flex row alignments */
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.flex-between {
+    justify-content: space-between;
+}
+
+.flex-center {
+    justify-content: center;
+}
+
+.gap-sm {
+    gap: 0.5rem;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .admin-container {
+        padding: 1.5rem 1rem;
+    }
+    
+    .admin-header {
+        padding: 2rem;
+    }
+    
+    .admin-content-card {
+        padding: 1.5rem;
+    }
+    
+    .title-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .btn-primary {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .desc-cell {
+        max-width: 200px;
+    }
+}
