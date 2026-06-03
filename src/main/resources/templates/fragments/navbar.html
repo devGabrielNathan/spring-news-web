@@ -9,11 +9,11 @@
 
         <div class="nav-links desktop-only">            
             <div th:if="${isAuthenticated}" class="auth-group">
-                <a class="nav-link-btn" href="/admin"><i class="fa-solid fa-chart-line"></i>Painel</a>
+                <a class="nav-link" href="/admin"><i class="fa-solid fa-chart-line"></i>Painel</a>
                 <span class="nav-divider"></span>
-                <a class="nav-link-btn-danger" href="/logout"><i class="fa-solid fa-right-from-bracket"></i>Sair</a>
+                <a class="nav-link nav-link-danger" href="/logout"><i class="fa-solid fa-right-from-bracket"></i>Sair</a>
             </div> 
-            <a th:unless="${isAuthenticated}" class="nav-link-btn" href="/login">Entrar</a>
+            <a th:unless="${isAuthenticated}" class="nav-link" href="/login"><i class="fa-solid fa-right-to-bracket"></i>Entrar</a>
         </div>
 
         <button id="navbar-toggle" class="mobile-only" aria-label="Abrir menu">

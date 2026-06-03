@@ -1,22 +1,24 @@
 <footer class="footer" th:fragment="footer">
-  <div class="footer-brand">
-    <a class="footer-title" href="/">
-      <i class="fa-solid fa-book-open"></i>
-      <span>PostBlog</span>
-    </a>
-    <p class="footer-desc">
-      Sua principal fonte de notícias diárias, análises aprofundadas e artigos interessantes sobre o mundo da tecnologia e além.
-    </p>
-  </div>
-
-  <div class="footer-bottom">
-    <div class="footer-copyright">
-      &copy; <span th:text="${T(java.time.LocalDate).now().year}">2026</span> PostBlog. Todos os direitos reservados.
-    </div>
-    <div class="footer-bottom-links">
-      <a href="https://github.com/devGabrielNathan/spring-news-web" target="_blank" title="GitHub">
-        <i class="fa-brands fa-github"></i>
+  <div class="footer-container">
+    <div class="footer-brand">
+      <a class="footer-title" href="/">
+        <i class="fa-solid fa-book-open"></i>
+        <span>PostBlog</span>
       </a>
+      <p class="footer-desc">
+        Sua principal fonte de notícias diárias, análises aprofundadas e artigos interessantes sobre o mundo da tecnologia e além.
+      </p>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-copyright">
+        &copy; <span th:text="${T(java.time.LocalDate).now().year}">2026</span> PostBlog. Todos os direitos reservados.
+      </div>
+      <div class="footer-bottom-links">
+        <a href="https://github.com/devGabrielNathan/spring-news-web" target="_blank" title="GitHub">
+          <i class="fa-brands fa-github"></i>
+        </a>
+      </div>
     </div>
   </div>
 </footer>
