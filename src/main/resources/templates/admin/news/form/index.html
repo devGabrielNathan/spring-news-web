@@ -14,7 +14,7 @@
 <body class="admin-form-page">
 
     <div class="admin-layout">
-        <!-- <aside th:replace="~{fragments/navbar-admin :: navbar-admin(activePage='news')}"></aside> -->
+        <aside th:replace="~{fragments/navbar-admin :: navbar-admin(activePage='news')}"></aside>
 
         <main class="admin-main-content">
 
@@ -35,7 +35,7 @@
 
                         <div class="form-group-title">
                             <input type="text" th:field="*{title}" id="title" class="editor-title-input"
-                                placeholder="Insira um título impactante para a notícia..." required autofocus />
+                                placeholder="Insira um título..." required autofocus />
                             <div class="field-error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
                                 <i class="fa-solid fa-circle-exclamation"></i> Erro no título
                             </div>
@@ -43,7 +43,7 @@
 
                         <div class="editor-summary-container">
                             <textarea th:field="*{resume}" id="resume" class="editor-summary-input"
-                                placeholder="Escreva um resumo conciso (linha fina) que instigue a leitura. Este texto aparecerá nos cards da página inicial."
+                                placeholder="Escreva um resumo conciso. Este texto aparecerá nos cards da página inicial."
                                 required></textarea>
                         </div>
                         <div class="field-error" th:if="${#fields.hasErrors('resume')}" th:errors="*{resume}">
@@ -70,7 +70,7 @@
                             </div>
 
                             <textarea th:field="*{content}" id="content" class="editor-content-input"
-                                placeholder="Comece a escrever a notícia aqui..." required></textarea>
+                                placeholder="Comece a escrever o conteúdo da notícia aqui..." required></textarea>
                         </div>
                         <div class="field-error" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">
                             <i class="fa-solid fa-circle-exclamation"></i> Erro no conteúdo
