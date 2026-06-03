@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         body.classList.toggle('mobile-nav-active');
     };
 
-    const closeMobileNav = () => {
+    const closeMobileNav = ()    => {
         body.classList.remove('mobile-nav-active');
     };
 
