@@ -1,9 +1,5 @@
-/* Styling for Admin Dashboard */
-
-/* Variables */
 :root {
     --table-header-bg: #f8fafc;
-    --table-row-hover: #f1f5f9;
     --border-color: rgba(130, 147, 153, 0.18);
     --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.03);
 }
@@ -15,7 +11,6 @@
     width: 100%;
 }
 
-/* Header Banner styling */
 .admin-header {
     background: var(--secondary-color);
     padding: 2.5rem 3rem;
@@ -40,7 +35,6 @@
     margin-top: 0.25rem;
 }
 
-/* Content Card styling */
 .admin-content-card {
     background: #ffffff;
     border-radius: 1rem;
@@ -68,7 +62,6 @@
     margin-bottom: 2rem;
 }
 
-/* Button styles */
 .btn-primary {
     display: inline-flex;
     align-items: center;
@@ -90,7 +83,6 @@
     opacity: 0.8;
 }
 
-/* Table wrapper and Table design */
 .table-wrapper {
     overflow-x: auto;
     border-radius: 0.75rem;
@@ -135,7 +127,6 @@
     border-bottom: none;
 }
 
-/* Title and description cell sizes */
 .title-cell {
     font-weight: 600;
     color: #0f172a;
@@ -165,7 +156,6 @@
     justify-content: center;
 }
 
-/* Action button icons styling */
 .action-btn {
     display: inline-flex;
     align-items: center;
@@ -199,7 +189,6 @@
     opacity: 0.8;
 }
 
-/* Empty State styling */
 .empty-table-message {
     text-align: center;
     padding: 4rem 2rem !important;
@@ -218,7 +207,6 @@
     color: #cbd5e1;
 }
 
-/* Flex row alignments */
 .flex-row {
     display: flex;
     flex-direction: row;
@@ -237,37 +225,35 @@
     gap: 0.5rem;
 }
 
-/* Responsiveness */
 @media (max-width: 768px) {
     .admin-container {
         padding: 1.5rem 1rem;
     }
-    
+
     .admin-header {
         padding: 2rem;
     }
-    
+
     .admin-content-card {
         padding: 1.5rem;
     }
-    
+
     .title-row {
         flex-direction: column;
         align-items: flex-start;
         gap: 1rem;
     }
-    
+
     .btn-primary {
         width: 100%;
         justify-content: center;
     }
-    
+
     .desc-cell {
         max-width: 200px;
     }
 }
 
-/* Back link styling */
 .back-link {
     color: var(--primary-text-color);
     font-size: 1.5rem;
@@ -284,7 +270,6 @@
     opacity: 0.8;
 }
 
-/* Form Styles */
 .admin-form {
     display: flex;
     flex-direction: column;
@@ -328,8 +313,8 @@
 }
 
 .form-group textarea {
-    resize: vertical;
-    min-height: 120px;
+    resize: none;
+    min-height: 4rem;
 }
 
 .form-actions {
@@ -345,7 +330,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background-color: #f1f5f9;
+    background-color: var(--background-color);
     color: #475569;
     font-size: 0.95rem;
     font-weight: 600;
@@ -362,7 +347,6 @@
     color: #0f172a;
 }
 
-/* Validation and Alerts */
 .field-error {
     color: var(--danger-color);
     font-size: 0.85rem;
@@ -385,7 +369,7 @@
 }
 
 .alert-error-message i {
-    color: #ef4444;
+    color: var(--danger-color);
 }
 
 /* Admin Layout and Sidebar */

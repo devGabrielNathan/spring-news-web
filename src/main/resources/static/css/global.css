@@ -1,10 +1,11 @@
 :root {
     --primary-color: #1A1A1A;
     --secondary-color: #829399;
+    --tertiary-color: white;
     --background-color: #EAF1F3;
     --danger-color: #CB0003;
     --primary-text-color: white;
-    --text-muted: #64748b;
+    --border-light: #e2e8f0;
 }
 
 * {
@@ -53,7 +54,6 @@ body {
     padding-top: var(--navbar-height, 72px);
 }
 
-/* Header and Navbar */
 header {
     background: var(--primary-color);
     position: fixed;
@@ -87,7 +87,6 @@ body.navbar-scrolled .navbar-container {
     transition: min-height 0.2s ease, padding 0.2s ease;
 }
 
-/* Brand styling */
 .navbar-brand a {
     display: flex;
     align-items: center;
@@ -104,7 +103,6 @@ body.navbar-scrolled .navbar-container {
     font-size: 1.5rem;
 }
 
-/* Navigation Links */
 .nav-links {
     display: flex;
     gap: 2rem;
@@ -134,7 +132,6 @@ body.navbar-scrolled .navbar-container {
     background-color: rgba(255, 255, 255, 0.15);
 }
 
-/* Auth Group */
 .auth-group {
     display: flex;
     align-items: center;
@@ -177,7 +174,6 @@ body.navbar-scrolled .navbar-container {
     transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.2s ease;
 }
 
-/* Active hamburger icon state (transforms to cross 'X') */
 body.mobile-nav-active #navbar-toggle .hamburger-line:nth-child(1) {
     transform: translateY(8px) rotate(45deg);
 }
@@ -190,7 +186,6 @@ body.mobile-nav-active #navbar-toggle .hamburger-line:nth-child(3) {
     transform: translateY(-8px) rotate(-45deg);
 }
 
-/* Mobile Dropdown Panel */
 .mobile-menu {
     position: fixed;
     top: 0;
@@ -209,7 +204,6 @@ body.mobile-nav-active .mobile-menu {
     right: 0;
 }
 
-/* Backdrop overlay when mobile menu is active */
 .mobile-menu-overlay {
     position: fixed;
     top: 0;
@@ -295,7 +289,6 @@ main {
     flex: 1;
 }
 
-/* Footer Layout */
 footer.footer {
     background-color: var(--primary-color);
     color: var(--primary-text-color);

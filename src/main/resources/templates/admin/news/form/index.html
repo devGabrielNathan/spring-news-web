@@ -5,70 +5,85 @@
     title=~{::title},
     links=~{::link}
 )}">
-    <title th:text="${newsId != null} ? 'Atualizar Notícia - PostBlog' : 'Criar Notícia - PostBlog'">Criar Notícia - PostBlog</title>
+    <title th:text="${newsId != null} ? 'Atualizar Notícia - PostBlog' : 'Criar Notícia - PostBlog'">Criar Notícia -
+        PostBlog</title>
     <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" th:href="@{/css/admin-form.css}">
 </head>
 
-<body class="admin-body">
-    <div class="admin-layout">
-        <aside th:replace="~{fragments/navbar-admin :: navbar-admin(activePage='news')}"></aside>
+<body class="admin-form-page">
 
-        <div class="admin-main-content">
-            <div class="admin-container">
-                <main>
-                    <div class="content-wrapper-size admin admin-header">
-                        <div class="header-content flex-row align-center gap-sm">
-                            <a th:href="@{/admin/news}" class="back-link">
-                                <i class="fa-solid fa-arrow-left"></i>
-                            </a>
-                            <h1 class="heading" th:text="${newsId != null} ? 'Atualizar Notícia' : 'Criar Notícia'">Criar Notícia</h1>
-                        </div>
+    <div class="admin-layout">
+        <!-- <aside th:replace="~{fragments/navbar-admin :: navbar-admin(activePage='news')}"></aside> -->
+
+        <main class="admin-main-content">
+
+            <header th:replace="~{fragments/navbar-form}"></header>
+
+            <div class="editor-scroll-container">
+                <div class="editor-form-wrapper">
+
+                    <div th:if="${error}" class="alert-error-message">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <span th:text="${error}">Erro ao salvar notícia</span>
                     </div>
 
-                    <article class="content-wrapper-size admin admin-content-card">
+                    <form th:action="${newsId != null} ? @{/admin/news/update(id=${newsId})} : @{/admin/news/create}"
+                        th:object="${news}" method="POST" id="news-form" class="admin-form">
 
-                        <div th:if="${error}" class="alert-error-message">
-                            <i class="fa-solid fa-circle-exclamation"></i>
-                            <span th:text="${error}">Erro ao salvar notícia</span>
+                        <input type="hidden" th:field="*{authorId}" />
+
+                        <div class="form-group-title">
+                            <input type="text" th:field="*{title}" id="title" class="editor-title-input"
+                                placeholder="Insira um título impactante para a notícia..." required autofocus />
+                            <div class="field-error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
+                                <i class="fa-solid fa-circle-exclamation"></i> Erro no título
+                            </div>
                         </div>
 
-                        <form th:action="${newsId != null} ? @{/admin/news/update(id=${newsId})} : @{/admin/news/create}" 
-                              th:object="${news}" 
-                              method="POST" 
-                              class="admin-form">
-                            
-                            <input type="hidden" th:field="*{authorId}" />
-
-                            <div class="form-group">
-                                <label for="title">Título</label>
-                                <input type="text" th:field="*{title}" id="title" placeholder="Insira o título da notícia" required>
-                                <div class="field-error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Erro no título</div>
+                        <div class="editor-summary-container">
+                            <textarea th:field="*{resume}" id="resume" class="editor-summary-input"
+                                placeholder="Escreva um resumo conciso (linha fina) que instigue a leitura. Este texto aparecerá nos cards da página inicial."
+                                required></textarea>
+                        </div>
+                        <div class="field-error" th:if="${#fields.hasErrors('resume')}" th:errors="*{resume}">
+                            <i class="fa-solid fa-circle-exclamation"></i> Erro no resumo
+                        </div>
+                        <div class="editor-rich-container">
+                            <div class="editor-toolbar">
+                                <span class="toolbar-dropdown">Parágrafo <i class="fa-solid fa-chevron-down"></i></span>
+                                <div class="toolbar-separator"></div>
+                                <button type="button" class="toolbar-btn" title="Negrito"><i
+                                        class="fa-solid fa-bold"></i></button>
+                                <button type="button" class="toolbar-btn" title="Itálico"><i
+                                        class="fa-solid fa-italic"></i></button>
+                                <button type="button" class="toolbar-btn" title="Sublinhado"><i
+                                        class="fa-solid fa-underline"></i></button>
+                                <div class="toolbar-separator"></div>
+                                <button type="button" class="toolbar-btn" title="Lista não ordenada"><i
+                                        class="fa-solid fa-list-ul"></i></button>
+                                <button type="button" class="toolbar-btn" title="Lista ordenada"><i
+                                        class="fa-solid fa-list-ol"></i></button>
+                                <div class="toolbar-separator"></div>
+                                <button type="button" class="toolbar-btn" title="Inserir Link"><i
+                                        class="fa-solid fa-link"></i></button>
                             </div>
 
-                            <div class="form-group">
-                                <label for="resume">Resumo</label>
-                                <textarea th:field="*{resume}" id="resume" placeholder="Insira uma breve descrição/resumo da notícia" rows="3" required></textarea>
-                                <div class="field-error" th:if="${#fields.hasErrors('resume')}" th:errors="*{resume}">Erro no resumo</div>
-                            </div>
+                            <textarea th:field="*{content}" id="content" class="editor-content-input"
+                                placeholder="Comece a escrever a notícia aqui..." required></textarea>
+                        </div>
+                        <div class="field-error" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">
+                            <i class="fa-solid fa-circle-exclamation"></i> Erro no conteúdo
+                        </div>
 
-                            <div class="form-group">
-                                <label for="content">Conteúdo</label>
-                                <textarea th:field="*{content}" id="content" placeholder="Insira o conteúdo completo da notícia" rows="10" required></textarea>
-                                <div class="field-error" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Erro no conteúdo</div>
-                            </div>
-
-                            <div class="form-actions">
-                                <a th:href="@{/admin/news}" class="btn-secondary">Cancelar</a>
-                                <button type="submit" class="btn-primary">
-                                    <i class="fa-solid fa-save"></i> Salvar
-                                </button>
-                            </div>
-                        </form>
-                    </article>
-                </main>
+                    </form>
+                </div>
             </div>
+            <footer th:replace="~{fragments/footer-form}"></footer>
+        </main>
+    </div>
 
-        </div>
+    </div>
     </div>
 </body>
 
