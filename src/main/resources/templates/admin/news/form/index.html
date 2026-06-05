@@ -32,6 +32,7 @@
                         th:object="${news}" method="POST" id="news-form" class="admin-form">
 
                         <input type="hidden" th:field="*{authorId}" />
+                        <input type="hidden" th:field="*{status}" id="news-status-field" />
 
                         <div class="form-group-title">
                             <input type="text" th:field="*{title}" id="title" class="editor-title-input"
