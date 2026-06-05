@@ -138,7 +138,6 @@ body.navbar-scrolled .navbar-container {
     gap: 1.5rem;
 }
 
-/* Call-to-action Button style */
 .nav-link-danger {
     transition: background-color 0.2s ease, opacity 0.2s ease;
 }
@@ -148,7 +147,6 @@ body.navbar-scrolled .navbar-container {
     opacity: 1;
 }
 
-/* Responsive Mobile menu */
 .mobile-only {
     display: none !important;
 }
@@ -337,7 +335,6 @@ footer.footer {
     max-width: 450px;
 }
 
-/* Footer Bottom Bar */
 .footer-bottom {
     width: 100%;
     padding-top: 1.5rem;

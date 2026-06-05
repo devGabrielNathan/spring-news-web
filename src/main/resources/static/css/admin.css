@@ -167,7 +167,6 @@
     justify-content: center;
 }
 
-/* Custom Table Cell Spacing & Styles */
 .author-date-cell {
     width: 25%;
     vertical-align: middle;
@@ -210,7 +209,6 @@
     text-align: center;
 }
 
-/* Status Badges */
 .status-badge {
     display: inline-flex;
     align-items: center;
@@ -463,7 +461,6 @@
     color: var(--danger-color);
 }
 
-/* Admin Layout and Sidebar */
 body.admin-body {
     padding-top: 0 !important;
     background-color: var(--background-color);
@@ -589,7 +586,6 @@ body.admin-body {
     transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Sidebar Toggle Button Styling */
 .sidebar-toggle-btn {
     display: flex;
     align-items: center;
@@ -642,7 +638,6 @@ body.admin-body {
     color: white;
 }
 
-/* Collapsed Sidebar Styles */
 .admin-sidebar.collapsed {
     width: 80px;
     padding: 2rem 0.5rem;
@@ -687,7 +682,6 @@ body.admin-body {
     flex: 1;
 }
 
-/* Sidebar Responsiveness */
 @media (max-width: 992px) {
     .sidebar-toggle-btn {
         display: none !important;

@@ -7,91 +7,134 @@
 )}">
     <title>Gerenciar Notícias - PostBlog</title>
     <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" th:href="@{/css/admin-news.css}">
 </head>
 
-<body class="admin-body">
+<body class="admin-news-page">
     <div class="admin-layout">
         <aside th:replace="~{fragments/navbar-admin :: navbar-admin(activePage='news')}"></aside>
 
-        <div class="admin-main-content">
-            <div class="admin-container">
-                <main>
-                    <div class="content-wrapper-size admin admin-header">
-                        <div class="header-content">
-                            <h1 class="heading">Bem vindo, <span th:if="${currentUser != null}" th:text="${currentUser.name}">Administrador</span><span th:unless="${currentUser != null}">Administrador</span>!</h1>
-                            <p class="text-small sub-heading">Esta é a página de administração do site.</p>
-                            <p class="text-small sub-heading">Você pode gerenciar as notícias na tabela abaixo.</p>
+        <main class="admin-main-content">
+
+            <header class="news-header">
+                <div class="news-header-left">
+                    <div class="news-header-title-group">
+                        <span class="news-header-title">Gerenciar Notícias</span>
+                    </div>
+                </div>
+                <div class="news-header-right">
+                    <a class="btn-new-article" th:href="@{/admin/news/create}">
+                        <i class="fas fa-plus"></i> Nova Notícia
+                    </a>
+                </div>
+            </header>
+
+            <div class="news-scroll-container">
+                <div class="news-content-wrapper">
+
+                    <div class="news-toolbar">
+                        <form class="search-box" th:action="@{/admin/news}" method="GET">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" name="q" id="news-search" class="search-input"
+                                   placeholder="Buscar por título ou resumo..."
+                                   th:value="${searchQuery}" />
+                        </form>
+                        <div class="toolbar-filters">
+                            <div class="filter-chips-group">
+                                <a th:href="@{/admin/news(status='escrita')}"
+                                   th:classappend="${activeStatus == 'escrita'} ? 'active' : ''"
+                                   class="filter-chip">
+                                    <i class="fas fa-pen-nib"></i> Escrita
+                                </a>
+                                <a th:href="@{/admin/news(status='aprovada')}"
+                                   th:classappend="${activeStatus == 'aprovada'} ? 'active' : ''"
+                                   class="filter-chip">
+                                    <i class="fas fa-check-circle"></i> Aprovada
+                                </a>
+                                <a th:href="@{/admin/news(status='rejeitada')}"
+                                   th:classappend="${activeStatus == 'rejeitada'} ? 'active' : ''"
+                                   class="filter-chip">
+                                    <i class="fas fa-times-circle"></i> Rejeitada
+                                </a>
+                                <a th:href="@{/admin/news(status='arquivada')}"
+                                   th:classappend="${activeStatus == 'arquivada'} ? 'active' : ''"
+                                   class="filter-chip">
+                                    <i class="fas fa-archive"></i> Arquivada
+                                </a>
+                            </div>
+                            <div class="filter-info-group">
+                                <span class="news-header-subtitle"
+                                      th:if="${newsList != null}"
+                                      th:text="${#lists.size(newsList)} + ' notícias'">0 notícias</span>
+                                <button class="filter-clear-btn"
+                                        th:classappend="${activeStatus == null && searchQuery == null} ? 'hidden' : ''"
+                                        onclick="window.location.href='/admin/news'"
+                                        title="Limpar filtros">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
-                    <article class="content-wrapper-size admin admin-content-card">
-                        <div class="flex-row flex-between title-row">
-                            <h2 class="heading table-title">Gerenciar Notícias</h2>
-                            <a class="btn-primary" th:href="@{/admin/news/create}">
-                                <i class="fas fa-plus"></i> Criar Notícia
-                            </a>
-                        </div>
-                        <p class="text-small section-desc">Crie, edite ou remova notícias do site.</p>
-                        
-                        <div class="table-wrapper">
-                            <table class="admin-table">
-                                 <thead>
-                                     <tr>
-                                         <th>Notícia</th>
-                                         <th>Autor &amp; Atualização</th>
-                                         <th class="status-header">Status</th>
-                                         <th class="actions-header">Ações</th>
-                                     </tr>
-                                 </thead>
-                                 <tbody>
-                                     <tr th:each="news : ${newsList}" class="table-row-animate">
-                                         <td class="news-cell">
-                                             <span class="news-title" th:text="${news.title}">Título da Notícia</span>
-                                             <span class="news-resume" th:text="${news.resume}">Resumo da descrição</span>
-                                         </td>
-                                         <td class="author-date-cell">
-                                             <div class="author-date-wrapper">
-                                                 <div class="author-info">
-                                                     <i class="far fa-user author-icon"></i>
-                                                     <span th:text="${news.authorName}">Autor da Notícia</span>
-                                                 </div>
-                                                 <div class="date-info">
-                                                     <i class="far fa-calendar-alt date-icon"></i>
-                                                     <span th:text="${#temporals.format(news.updatedAt, 'dd/MM/yyyy HH:mm')}">Data da última atualização</span>
-                                                 </div>
-                                             </div>
-                                         </td>
-                                         <td class="status-cell">
-                                             <span th:class="|status-badge status-${#strings.toLowerCase(news.status)}|" th:text="${news.status}">Status</span>
-                                         </td>
-                                         <td class="actions-cell">
-                                             <div class="actions-group">
-                                                 <a th:href="@{/admin/news/update(id=${news.id})}" class="action-btn edit-btn" title="Editar">
-                                                     <i class="fas fa-edit"></i>
-                                                 </a>
-                                                 <a th:href="@{/admin/news/delete(id=${news.id})}" class="action-btn delete-btn" title="Excluir"
-                                                    onclick="return confirm('Tem certeza que deseja excluir esta notícia?');">
-                                                     <i class="fas fa-trash-alt"></i>
-                                                 </a>
-                                             </div>
-                                         </td>
-                                     </tr>
-                                     <tr th:if="${#lists.isEmpty(newsList)}">
-                                         <td colspan="4" class="empty-table-message">
-                                            <div class="empty-state-container">
-                                                <i class="fas fa-newspaper empty-icon"></i>
-                                                <p>Nenhuma notícia cadastrada.</p>
-                                            </div>
-                                        </td>
-                                     </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </article>
-                </main>
-            </div>
+                    <div th:if="${searchQuery != null}" class="search-results-info">
+                        <span>Resultados para "<strong th:text="${searchQuery}">query</strong>"</span>
+                        <a th:href="@{/admin/news}" class="clear-search-link">Limpar busca</a>
+                    </div>
 
-        </div>
+                    <div class="news-list" id="news-list" th:if="${!#lists.isEmpty(newsList)}">
+                        <article th:each="news : ${newsList}" class="news-item">
+                            <div class="news-item-main">
+                                <div class="news-item-content">
+                                    <div class="news-item-header">
+                                        <span th:class="|status-pill status-${#strings.toLowerCase(news.status)}|"
+                                              th:text="${news.status}">Status</span>
+                                        <span class="news-item-date">
+                                            <i class="far fa-clock"></i>
+                                            <span th:text="${#temporals.format(news.updatedAt, 'dd MMM yyyy, HH:mm')}">01 Jan 2024, 12:00</span>
+                                        </span>
+                                    </div>
+                                    <h3 class="news-item-title" th:text="${news.title}">Título da Notícia</h3>
+                                    <p class="news-item-resume" th:text="${news.resume}">Resumo da notícia aparece aqui...</p>
+                                    <div class="news-item-meta">
+                                        <div class="meta-author">
+                                            <div class="author-avatar">
+                                                <i class="fas fa-user"></i>
+                                            </div>
+                                            <span th:text="${news.authorName}">Autor</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="news-item-actions">
+                                    <a th:href="@{/admin/news/update(id=${news.id})}"
+                                       class="action-icon-btn edit-icon-btn"
+                                       title="Editar notícia">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                                    <a th:href="@{/admin/news/delete(id=${news.id})}"
+                                       class="action-icon-btn delete-icon-btn"
+                                       title="Excluir notícia"
+                                       onclick="return confirm('Tem certeza que deseja excluir esta notícia?');">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div th:if="${#lists.isEmpty(newsList)}" class="news-empty-state">
+                        <div class="empty-illustration">
+                            <i class="far fa-newspaper"></i>
+                        </div>
+                        <h3 class="empty-title">Nenhuma notícia encontrada</h3>
+                        <p class="empty-desc">Comece criando sua primeira notícia clicando no botão acima.</p>
+                        <a th:href="@{/admin/news/create}" class="btn-new-article empty-cta">
+                            <i class="fas fa-plus"></i> Criar primeira notícia
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </main>
     </div>
 </body>
 
