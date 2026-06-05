@@ -7,37 +7,134 @@
 )}">
     <title>Gerenciar Autores - PostBlog</title>
     <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" th:href="@{/css/admin-authors.css}">
 </head>
 
-<body class="admin-body">
+<body class="admin-authors-page">
     <div class="admin-layout">
         <aside th:replace="~{fragments/navbar-admin :: navbar-admin(activePage='authors')}"></aside>
 
-        <div class="admin-main-content">
-            <div class="admin-container">
-                <main>
-                    <div class="content-wrapper-size admin admin-header">
-                        <div class="header-content">
-                            <h1 class="heading">Gerenciar Autores</h1>
-                            <p class="text-small sub-heading">Gerencie os autores e administradores do sistema.</p>
+        <main class="admin-main-content">
+
+            <header class="authors-header">
+                <div class="authors-header-left">
+                    <div class="authors-header-title-group">
+                        <span class="authors-header-title">Gerenciar Autores</span>
+                    </div>
+                </div>
+                <div class="authors-header-right">
+                    <a class="btn-new-author" th:href="@{/admin/authors}" onclick="alert('Cadastro de novos autores em desenvolvimento.'); return false;">
+                        <i class="fas fa-plus"></i> Novo Autor
+                    </a>
+                </div>
+            </header>
+
+            <div class="authors-scroll-container">
+                <div class="authors-content-wrapper">
+
+                    <div class="authors-toolbar">
+                        <form class="search-box" th:action="@{/admin/authors}" method="GET">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" name="q" id="authors-search" class="search-input"
+                                   placeholder="Buscar por nome, e-mail ou assinatura..."
+                                   th:value="${searchQuery}" />
+                        </form>
+                        <div class="toolbar-filters">
+                            <div class="filter-chips-group">
+                                <a th:href="@{/admin/authors(role='redator')}"
+                                   th:classappend="${activeRole == 'redator'} ? 'active' : ''"
+                                   class="filter-chip">
+                                    <i class="fas fa-pen-nib"></i> Redatores
+                                </a>
+                                <a th:href="@{/admin/authors(role='revisor')}"
+                                   th:classappend="${activeRole == 'revisor'} ? 'active' : ''"
+                                   class="filter-chip">
+                                    <i class="fas fa-check-circle"></i> Revisores
+                                </a>
+                            </div>
+                            <div class="filter-info-group">
+                                <span class="authors-header-subtitle"
+                                      th:if="${authorsList != null}"
+                                      th:text="${#lists.size(authorsList)} + ' autores'">0 autores</span>
+                                <button class="filter-clear-btn"
+                                        th:classappend="${activeRole == null && searchQuery == null} ? 'hidden' : ''"
+                                        onclick="window.location.href='/admin/authors'"
+                                        title="Limpar filtros">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
-                    <article class="content-wrapper-size admin admin-content-card">
-                        <div class="flex-row flex-between title-row">
-                            <h2 class="heading table-title">Lista de Autores</h2>
-                        </div>
-                        <p class="text-small section-desc">Os recursos para adicionar, editar e excluir autores estarão disponíveis em breve.</p>
-                        
-                        <div class="empty-state-container" style="padding: 4rem 2rem;">
-                            <i class="fas fa-users-cog empty-icon" style="font-size: 3rem; color: #cbd5e1; margin-bottom: 1rem;"></i>
-                            <p style="color: var(--text-muted);">Área de gerenciamento de autores em desenvolvimento.</p>
-                        </div>
-                    </article>
-                </main>
-            </div>
+                    <div th:if="${searchQuery != null}" class="search-results-info">
+                        <span>Resultados para "<strong th:text="${searchQuery}">query</strong>"</span>
+                        <a th:href="@{/admin/authors}" class="clear-search-link">Limpar busca</a>
+                    </div>
 
-        </div>
+                    <div class="authors-list" id="authors-list" th:if="${!#lists.isEmpty(authorsList)}">
+                        <article th:each="author : ${authorsList}" class="author-item">
+                            <div class="author-item-main">
+                                
+                                <div class="author-item-content">
+                                    <div class="author-item-header">
+                                        <span th:class="|role-pill role-${author.isEditor ? 'revisor' : 'redator'}|"
+                                              th:text="${author.isEditor ? 'Revisor' : 'Redator'}">Função</span>
+                                        <span class="author-item-email" th:text="${author.email}">email@domain.com</span>
+                                    </div>
+                                    <h3 class="author-item-name" th:text="${author.name}">Nome do Autor</h3>
+                                    <div class="author-item-details">
+                                        <span class="author-detail-item" th:if="${author.education != null && !author.education.empty}">
+                                            <i class="fas fa-graduation-cap"></i>
+                                            <span th:text="${author.education}">Formação</span>
+                                        </span>
+                                        <span class="author-detail-item" th:if="${author.signature != null && !author.signature.empty}">
+                                            <i class="fas fa-signature"></i>
+                                            <span th:text="${author.signature}">Assinatura</span>
+                                        </span>
+                                        <span class="author-detail-item" th:if="${author.birthDate != null}">
+                                            <i class="fas fa-cake-candles"></i>
+                                            <span th:text="${#temporals.format(author.birthDate, 'dd/MM/yyyy')}">01/01/2000</span>
+                                        </span>
+                                    </div>
+                                    <div class="author-item-meta">
+                                        <div class="meta-stats">
+                                            <i class="far fa-newspaper"></i>
+                                            <span th:text="${#lists.size(author.news)} + ' notícias publicadas'">0 notícias</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="author-item-actions">
+                                    <a href="#"
+                                       class="action-icon-btn edit-icon-btn"
+                                       title="Editar autor"
+                                       onclick="alert('Funcionalidade de edição de autores em desenvolvimento.'); return false;">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                                    <a th:href="@{/admin/authors/delete(id=${author.id})}"
+                                       class="action-icon-btn delete-icon-btn"
+                                       title="Excluir autor"
+                                       onclick="return confirm('Tem certeza que deseja excluir este autor? Isso removerá permanentemente todas as suas notícias associadas.');">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div th:if="${#lists.isEmpty(authorsList)}" class="authors-empty-state">
+                        <div class="empty-illustration">
+                            <i class="fas fa-users-slash"></i>
+                        </div>
+                        <h3 class="empty-title">Nenhum autor encontrado</h3>
+                        <p class="empty-desc">Ajuste sua busca ou limpe os filtros ativos para ver todos os autores.</p>
+                        <a th:href="@{/admin/authors}" class="btn-new-author empty-cta">
+                            <i class="fas fa-arrow-left"></i> Ver todos os autores
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </main>
     </div>
 </body>
 
