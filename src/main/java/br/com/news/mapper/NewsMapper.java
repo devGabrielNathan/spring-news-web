@@ -41,7 +41,8 @@ public class NewsMapper {
                 news.getCreatedAt(),
                 news.getUpdatedAt(),
                 news.getPublicatedAt(),
-                news.getAuthor().getId());
+                news.getAuthor().getId(),
+                news.getAuthor().getName());
     }
 
     public List<NewsResponse> toResponseList(List<News> news) {

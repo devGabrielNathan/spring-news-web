@@ -29,4 +29,6 @@ public class NewsResponse {
     private LocalDateTime publicatedAt;
 
     private Long author;
+
+    private String authorName;
 }

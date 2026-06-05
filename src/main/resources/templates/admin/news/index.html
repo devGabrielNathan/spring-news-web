@@ -35,37 +35,55 @@
                         
                         <div class="table-wrapper">
                             <table class="admin-table">
-                                <thead>
-                                    <tr>
-                                        <th>Nome</th>
-                                        <th>Descrição</th>
-                                        <th class="actions-header">Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="news : ${newsList}" class="table-row-animate">
-                                        <td class="title-cell" th:text="${news.title}">Título da Notícia</td>
-                                        <td class="desc-cell" th:text="${news.resume}">Resumo da descrição</td>
-                                        <td class="actions-cell">
-                                            <div class="actions-group">
-                                                <a th:href="@{/admin/news/update(id=${news.id})}" class="action-btn edit-btn" title="Editar">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <a th:href="@{/admin/news/delete(id=${news.id})}" class="action-btn delete-btn" title="Excluir"
-                                                   onclick="return confirm('Tem certeza que deseja excluir esta notícia?');">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr th:if="${#lists.isEmpty(newsList)}">
-                                        <td colspan="3" class="empty-table-message">
+                                 <thead>
+                                     <tr>
+                                         <th>Notícia</th>
+                                         <th>Autor &amp; Atualização</th>
+                                         <th class="status-header">Status</th>
+                                         <th class="actions-header">Ações</th>
+                                     </tr>
+                                 </thead>
+                                 <tbody>
+                                     <tr th:each="news : ${newsList}" class="table-row-animate">
+                                         <td class="news-cell">
+                                             <span class="news-title" th:text="${news.title}">Título da Notícia</span>
+                                             <span class="news-resume" th:text="${news.resume}">Resumo da descrição</span>
+                                         </td>
+                                         <td class="author-date-cell">
+                                             <div class="author-date-wrapper">
+                                                 <div class="author-info">
+                                                     <i class="far fa-user author-icon"></i>
+                                                     <span th:text="${news.authorName}">Autor da Notícia</span>
+                                                 </div>
+                                                 <div class="date-info">
+                                                     <i class="far fa-calendar-alt date-icon"></i>
+                                                     <span th:text="${#temporals.format(news.updatedAt, 'dd/MM/yyyy HH:mm')}">Data da última atualização</span>
+                                                 </div>
+                                             </div>
+                                         </td>
+                                         <td class="status-cell">
+                                             <span th:class="|status-badge status-${#strings.toLowerCase(news.status)}|" th:text="${news.status}">Status</span>
+                                         </td>
+                                         <td class="actions-cell">
+                                             <div class="actions-group">
+                                                 <a th:href="@{/admin/news/update(id=${news.id})}" class="action-btn edit-btn" title="Editar">
+                                                     <i class="fas fa-edit"></i>
+                                                 </a>
+                                                 <a th:href="@{/admin/news/delete(id=${news.id})}" class="action-btn delete-btn" title="Excluir"
+                                                    onclick="return confirm('Tem certeza que deseja excluir esta notícia?');">
+                                                     <i class="fas fa-trash-alt"></i>
+                                                 </a>
+                                             </div>
+                                         </td>
+                                     </tr>
+                                     <tr th:if="${#lists.isEmpty(newsList)}">
+                                         <td colspan="4" class="empty-table-message">
                                             <div class="empty-state-container">
                                                 <i class="fas fa-newspaper empty-icon"></i>
                                                 <p>Nenhuma notícia cadastrada.</p>
                                             </div>
                                         </td>
-                                    </tr>
+                                     </tr>
                                 </tbody>
                             </table>
                         </div>
