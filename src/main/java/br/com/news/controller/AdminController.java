@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import br.com.news.service.AuthorService;
+import br.com.news.dto.AuthorResponse;
+
 import java.util.List;
 
 @Controller
@@ -26,11 +29,13 @@ public class AdminController {
 
     private final NewsService newsService;
     private final NewsMapper newsMapper;
+    private final AuthorService authorService;
 
     @Autowired
-    public AdminController(NewsService newsService, NewsMapper newsMapper) {
+    public AdminController(NewsService newsService, NewsMapper newsMapper, AuthorService authorService) {
         this.newsService = newsService;
         this.newsMapper = newsMapper;
+        this.authorService = authorService;
     }
 
     @GetMapping("/admin")
@@ -69,8 +74,33 @@ public class AdminController {
     }
 
     @GetMapping("/admin/authors")
-    public String adminAuthors(Model model) {
+    public String adminAuthors(
+            @RequestParam(value = "role", required = false) String role,
+            @RequestParam(value = "q", required = false) String query,
+            Model model) {
+
+        List<AuthorResponse> authorsList;
+
+        if (query != null && !query.isBlank()) {
+            authorsList = authorService.search(query);
+            model.addAttribute("searchQuery", query);
+        } else if (role != null && !role.isBlank()) {
+            boolean isEditor = "revisor".equalsIgnoreCase(role);
+            authorsList = authorService.findByIsEditor(isEditor);
+        } else {
+            authorsList = authorService.findAll();
+        }
+
+        model.addAttribute("authorsList", authorsList);
+        model.addAttribute("activeRole", role);
+
         return "admin/authors/index";
+    }
+
+    @GetMapping("/admin/authors/delete")
+    public String deleteAuthor(@RequestParam("id") Long id) {
+        authorService.delete(id);
+        return "redirect:/admin/authors";
     }
 
     @GetMapping("/admin/news/create")

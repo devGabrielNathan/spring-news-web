@@ -22,7 +22,17 @@ public class AuthorService {
     }
 
     public List<AuthorResponse> findAll() {
-        List<Author> authorEntities = authorRepository.findAll();
+        List<Author> authorEntities = authorRepository.findAllByOrderByNameAsc();
+        return authorMapper.toResponseList(authorEntities);
+    }
+
+    public List<AuthorResponse> search(String query) {
+        List<Author> authorEntities = authorRepository.searchByNameOrEmailOrSignature(query.trim());
+        return authorMapper.toResponseList(authorEntities);
+    }
+
+    public List<AuthorResponse> findByIsEditor(boolean isEditor) {
+        List<Author> authorEntities = authorRepository.findByIsEditorOrderByNameAsc(isEditor);
         return authorMapper.toResponseList(authorEntities);
     }
 
