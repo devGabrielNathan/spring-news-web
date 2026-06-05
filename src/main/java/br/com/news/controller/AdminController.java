@@ -5,6 +5,7 @@ import br.com.news.dto.NewsResponse;
 import br.com.news.entity.Author;
 import br.com.news.mapper.NewsMapper;
 import br.com.news.service.NewsService;
+import br.com.news.util.NewsStatus;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class AdminController {
@@ -31,8 +34,7 @@ public class AdminController {
     }
 
     @GetMapping("/admin")
-    public String admin(Model model) {
-
+    public String admin() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (!auth.isAuthenticated()) {
@@ -43,8 +45,26 @@ public class AdminController {
     }
 
     @GetMapping("/admin/news")
-    public String adminNews(Model model) {
-        model.addAttribute("newsList", newsService.findAll());
+    public String adminNews(
+            @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "q", required = false) String query,
+            Model model) {
+
+        List<NewsResponse> newsList;
+
+        if (query != null && !query.isBlank()) {
+            newsList = newsService.search(query);
+            model.addAttribute("searchQuery", query);
+        } else if (status != null && !status.isBlank()) {
+            NewsStatus newsStatus = NewsStatus.valueOf(status.toUpperCase());
+            newsList = newsService.findByStatus(newsStatus);
+        } else {
+            newsList = newsService.findAllOrderByUpdatedAtDesc();
+        }
+
+        model.addAttribute("newsList", newsList);
+        model.addAttribute("activeStatus", status);
+
         return "admin/news/index";
     }
 
@@ -55,14 +75,12 @@ public class AdminController {
 
     @GetMapping("/admin/news/create")
     public String createForm(Model model, @AuthenticationPrincipal Author currentUser) {
-
         NewsRequest request = new NewsRequest();
         if (currentUser != null) {
             request.setAuthorId(currentUser.getId());
         }
 
         model.addAttribute("news", request);
-
         return "admin/news/form/index";
     }
 
@@ -80,8 +98,7 @@ public class AdminController {
 
         try {
             newsService.create(request);
-            return "redirect:/admin/news";
-
+            return "redirect:/admin/news?status=escrita";
         } catch (Exception e) {
             model.addAttribute("error", "Erro ao criar notícia: " + e.getMessage());
             return "admin/news/form/index";
@@ -96,9 +113,8 @@ public class AdminController {
             model.addAttribute("news", newsRequest);
             model.addAttribute("newsId", id);
             return "admin/news/form/index";
-
         } catch (Exception e) {
-            return "redirect:/admin/news";
+            return "redirect:/admin/news?status=escrita";
         }
     }
 
@@ -117,8 +133,7 @@ public class AdminController {
 
         try {
             newsService.update(id, request);
-            return "redirect:/admin/news";
-
+            return "redirect:/admin/news?status=escrita";
         } catch (Exception e) {
             model.addAttribute("newsId", id);
             model.addAttribute("error", "Erro ao atualizar notícia: " + e.getMessage());
@@ -128,9 +143,7 @@ public class AdminController {
 
     @GetMapping("/admin/news/delete")
     public String deleteNews(@RequestParam("id") Long id) {
-
         newsService.delete(id);
-
-        return "redirect:/admin/news";
+        return "redirect:/admin/news?status=escrita";
     }
 }

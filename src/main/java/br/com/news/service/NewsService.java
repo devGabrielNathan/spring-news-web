@@ -33,24 +33,31 @@ public class NewsService {
         return newsMapper.toResponseList(newsRepository.findAll());
     }
 
+    public List<NewsResponse> findAllOrderByUpdatedAtDesc() {
+        return newsMapper.toResponseList(newsRepository.findAllByOrderByUpdatedAtDesc());
+    }
+
+    public List<NewsResponse> findByStatus(NewsStatus status) {
+        return newsMapper.toResponseList(newsRepository.findByStatusOrderByUpdatedAtDesc(status));
+    }
+
+    public List<NewsResponse> search(String query) {
+        return newsMapper.toResponseList(newsRepository.searchByTitleOrResume(query.trim()));
+    }
+
     public NewsResponse findById(Long id) {
         return newsMapper.toResponse(newsRepository.findById(id).orElseThrow());
     }
 
     public NewsResponse create(NewsRequest request) {
-
         Author author = authorRepository.findById(request.getAuthorId()).orElseThrow();
-
         News news = newsMapper.toEntity(request, author);
-
         return newsMapper.toResponse(newsRepository.save(news));
     }
 
     public NewsResponse update(Long id, NewsRequest request) {
         newsRepository.findById(id).orElseThrow();
-
         Author author = authorRepository.findById(request.getAuthorId()).orElseThrow();
-
         News newsToUpdate = newsMapper.toEntity(request, author);
         newsToUpdate.setId(id);
         return newsMapper.toResponse(newsRepository.save(newsToUpdate));
@@ -60,8 +67,7 @@ public class NewsService {
         newsRepository.deleteById(id);
     }
 
-    public List<News> findByStatusOrderByPublicatedAtDesc(NewsStatus status, Pageable pageable){
+    public List<News> findByStatusOrderByPublicatedAtDesc(NewsStatus status, Pageable pageable) {
         return newsRepository.findByStatusOrderByPublicatedAtDesc(status, pageable).getContent();
     }
-
 }
