@@ -12,26 +12,85 @@ import java.time.LocalDate;
 public class DatabaseSeeder {
     @Bean
     public CommandLineRunner initDatabase(AuthorRepository authorRepository, PasswordEncoder passwordEncoder) {
+
+        
         return args -> {
+            
+            seedRedator(authorRepository, passwordEncoder);
+            
+            seedRevisor(authorRepository, passwordEncoder);
 
-            String adminEmail = "admin@admin.com";
+            seedAuthors(authorRepository, passwordEncoder);
+        };
+    }
 
-            if (!authorRepository.existsByEmail(adminEmail)) {
-                Author admin = new Author();
-                admin.setName("Administrador Padrão");
-                admin.setEmail(adminEmail);
-                admin.setPassword(passwordEncoder.encode("12345678"));
-                admin.setBirthDate(LocalDate.now());
-                admin.setEducation("Sistemas de Informação");
-                admin.setSignature("Admin");
-                admin.setEditor(true);
+    private void seedRedator(AuthorRepository authorRepository, PasswordEncoder passwordEncoder) {
+        
+        String redatorEmail = "redator@admin.com";
 
-                authorRepository.save(admin);
-                System.out.println("\n\n>>> Administrador padrão criado com sucesso!\n\n");
-                return;
+        if (!authorRepository.existsByEmail(redatorEmail)) {
+            Author redator = new Author();
+            redator.setName("Redator Admin");
+            redator.setEmail(redatorEmail);
+            redator.setPassword(passwordEncoder.encode("12345678"));
+            redator.setBirthDate(LocalDate.now());
+            redator.setEducation("Sistemas de Informação");
+            redator.setSignature("Redator Admin");
+            redator.setEditor(false);
+
+            authorRepository.save(redator);
+            System.out.println(">>> Redator Admin criado com sucesso!");
+            return;
+        }
+        System.out.println(">>> Redator Admin já existe no banco de dados. Pulando criação.");
+    }
+
+    private void seedRevisor(AuthorRepository authorRepository, PasswordEncoder passwordEncoder) {
+        
+        String revisorEmail = "revisor@admin.com";
+
+        if (!authorRepository.existsByEmail(revisorEmail)) {
+            Author revisor = new Author();
+            revisor.setName("Revisor Admin");
+            revisor.setEmail(revisorEmail);
+            revisor.setPassword(passwordEncoder.encode("12345678"));
+            revisor.setBirthDate(LocalDate.now());
+            revisor.setEducation("Sistemas de Informação");
+            revisor.setSignature("Revisor Admin");
+            revisor.setEditor(true);
+
+            authorRepository.save(revisor);
+            System.out.println(">>> Revisor Admin criado com sucesso!");
+            return;
+        }
+        System.out.println(">>> Revisor Admin já existe no banco de dados. Pulando criação.");
+    }
+
+    private void seedAuthors(AuthorRepository authorRepository, PasswordEncoder passwordEncoder) {
+        
+        String[] authorNames = {"Gabriel Nathan", "Itallo", "Leonardo", "Nathan"};
+
+        String[] authorEmails = {"gabrielnathan@gmail.com", "itallo@gmail.com", "leonardo@gmail.com", "nathan@gmail.com"};
+
+        String[] authorSignature = {"Gabriel Nathan", "Itallo", "Leonardo", "Nathan"};
+
+        for (int i = 0; i < authorNames.length; i++) {
+            if (!authorRepository.existsByEmail(authorEmails[i])) {
+                Author author = new Author();
+                author.setName(authorNames[i]);
+                author.setEmail(authorEmails[i]);
+                author.setPassword(passwordEncoder.encode("12345678"));
+                author.setBirthDate(LocalDate.now());
+                author.setEducation("Sistemas de Informação");
+                author.setSignature(authorSignature[i]);
+                author.setEditor(true);
+
+                authorRepository.save(author);
+                System.out.println(">>> Autor " + authorNames[i] + " criado com sucesso!");
+                continue;
             }
 
-            System.out.println("\n\n>>> Administrador padrão já existe no banco de dados. Pulando criação.\n\n");
-        };
+            System.out.println(">>> Autor " + authorNames[i] + " já existe no banco de dados. Pulando criação.");
+        }
     }
 }
