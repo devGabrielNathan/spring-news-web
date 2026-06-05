@@ -32,6 +32,15 @@
     </nav>
 
     <div class="sidebar-footer">
+        <div class="sidebar-user" th:if="${currentUser != null}">
+            <div class="user-avatar">
+                <i class="fa-solid fa-circle-user"></i>
+            </div>
+            <div class="user-info">
+                <span class="user-name" th:text="${currentUser.name}">Nome do Usuário</span>
+                <span class="user-role" th:text="${currentUser.isEditor ? 'Revisor' : 'Redator'}">Função</span>
+            </div>
+        </div>
         <button type="button" class="sidebar-toggle-btn" id="sidebarToggle">
             <i class="fa-solid fa-chevron-left toggle-icon"></i>
         </button>

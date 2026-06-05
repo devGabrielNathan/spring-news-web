@@ -576,6 +576,49 @@ body.admin-body {
     background-color: rgba(203, 0, 3, 0.1);
 }
 
+.sidebar-user {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-user .user-avatar {
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.sidebar-user .user-info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.sidebar-user .user-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: white;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.sidebar-user .user-role {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 500;
+    margin-top: 0.1rem;
+}
+
 .admin-main-content {
     margin-left: 280px;
     flex: 1;
@@ -647,7 +690,8 @@ body.admin-body {
 .admin-sidebar.collapsed .sidebar-logo .logo-text,
 .admin-sidebar.collapsed .sidebar-subtitle,
 .admin-sidebar.collapsed .sidebar-link span,
-.admin-sidebar.collapsed .sidebar-toggle-btn span {
+.admin-sidebar.collapsed .sidebar-toggle-btn span,
+.admin-sidebar.collapsed .sidebar-user .user-info {
     display: none;
 }
 
@@ -663,6 +707,21 @@ body.admin-body {
     border-radius: 50%;
     width: 44px;
     height: 44px;
+}
+
+.admin-sidebar.collapsed .sidebar-user {
+    padding: 0.5rem;
+    justify-content: center;
+    background-color: transparent;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    margin-bottom: 0;
+    border-color: transparent;
+}
+
+.admin-sidebar.collapsed .sidebar-user .user-avatar {
+    font-size: 1.75rem;
 }
 
 .admin-sidebar.collapsed .toggle-icon {
@@ -695,7 +754,8 @@ body.admin-body {
     
     .sidebar-logo .logo-text,
     .sidebar-subtitle,
-    .sidebar-link span {
+    .sidebar-link span,
+    .sidebar-user .user-info {
         display: none !important;
     }
     
@@ -708,6 +768,21 @@ body.admin-body {
         justify-content: center !important;
         padding: 0.85rem !important;
         border-radius: 50% !important;
+    }
+    
+    .sidebar-user {
+        padding: 0.5rem !important;
+        justify-content: center !important;
+        background-color: transparent !important;
+        border-radius: 50% !important;
+        width: 44px !important;
+        height: 44px !important;
+        margin-bottom: 0 !important;
+        border-color: transparent !important;
+    }
+    
+    .sidebar-user .user-avatar {
+        font-size: 1.75rem !important;
     }
     
     .admin-main-content {
@@ -729,6 +804,15 @@ body.admin-body {
     
     .sidebar-link {
         padding: 0.65rem !important;
+    }
+    
+    .sidebar-user {
+        width: 36px !important;
+        height: 36px !important;
+    }
+    
+    .sidebar-user .user-avatar {
+        font-size: 1.5rem !important;
     }
 }
 
