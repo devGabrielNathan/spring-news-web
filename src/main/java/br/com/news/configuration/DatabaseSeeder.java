@@ -5,10 +5,12 @@ import br.com.news.repository.AuthorRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import java.time.LocalDate;
 
 @Configuration
+@Profile("mock")
 public class DatabaseSeeder {
     @Bean
     public CommandLineRunner initDatabase(AuthorRepository authorRepository, PasswordEncoder passwordEncoder) {
@@ -86,11 +88,11 @@ public class DatabaseSeeder {
                 author.setEditor(true);
 
                 authorRepository.save(author);
-                System.out.println(">>> Autor " + authorNames[i] + " criado com sucesso!");
+                System.out.println(">>> " + authorNames[i] + " criado com sucesso!");
                 continue;
             }
 
-            System.out.println(">>> Autor " + authorNames[i] + " já existe no banco de dados. Pulando criação.");
+            System.out.println(">>> " + authorNames[i] + " já existe no banco de dados. Pulando criação.");
         }
     }
 }
