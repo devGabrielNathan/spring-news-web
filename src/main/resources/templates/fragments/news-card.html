@@ -1,7 +1,22 @@
 <div th:fragment="card(news)" class="card-news">
-    <h2 th:text="${news.title}"></h2>
-    <p th:text="${news.resume}"></p>
-    <small th:text="${news.author.signature}"></small>
-    <small th:text="${#temporals.format(news.publicatedAt, 'dd/MM/yyyy')}"></small>
-    <a th:href="@{/news/{id}(id=${news.id})}">Leia mais</a>
+    <div class="card-news-header">
+        <span class="card-news-date">
+            <i class="far fa-clock"></i>
+            <span th:text="${#temporals.format(news.publicatedAt != null ? news.publicatedAt : news.createdAt, 'dd MMM yyyy')}">01 Jan 2024</span>
+        </span>
+    </div>
+
+    <div class="card-news-content">
+        <h2 class="card-news-title">
+            <a th:href="@{/news/{id}(id=${news.id})}" th:text="${news.title}">Título da Notícia</a>
+        </h2>
+        <p class="card-news-resume" th:text="${news.resume}">Resumo da notícia...</p>
+    </div>
+
+    <div class="card-news-footer">
+        <span class="card-news-author"><i class="fa-solid fa-signature"></i><span class="author-signature" th:text="${news.author.signature}">Assinatura</span></span>
+        <a th:href="@{/news/{id}(id=${news.id})}" class="read-more-link">
+            Leia mais <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
 </div>
