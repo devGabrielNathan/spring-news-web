@@ -1,6 +1,7 @@
 package br.com.news.controller;
 
 import br.com.news.entity.Author;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,6 +10,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 @ControllerAdvice
 public class SecurityControllerAdvice {
+
+    @ModelAttribute("isLoginPage")
+    public boolean isLoginPage(HttpServletRequest request) {
+        return "/login".equals(request.getRequestURI());
+    }
 
     @ModelAttribute("isAuthenticated")
     public boolean isAuthenticated() {

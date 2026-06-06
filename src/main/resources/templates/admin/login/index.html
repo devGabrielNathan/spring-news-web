@@ -1,31 +1,61 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head(
     title=~{::title},
     links=~{::link}
 )}">
-    <title>PostBlog - Login</title>
+    <title>Entrar - PostBlog</title>
     <link rel="stylesheet" th:href="@{/css/login.css}"/>
 </head>
-<body>
+<body class="login-page">
     <header th:replace="~{fragments/navbar}"></header>
-    <main class="flex-center">
-        <div class="content-wrapper-size flex-column flex-center">
-            <form th:action="@{/login}" th:method="post" class="flex-column flex-center">
-                <div class="flex-column flex-center">
-                    <h1 class="heading">Painel Administrativo</h1>
+    
+    <main class="login-main">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <span class="login-subtitle">Acesso Restrito</span>
+                    <h1 class="login-title">Painel Administrativo</h1>
+                    <p class="login-desc">Entre com suas credenciais para gerenciar o conteúdo.</p>
                 </div>
 
-                <div th:if="${param.error}" class="alert-error">
-                    <p>Credenciais inválidas. Por favor, tente novamente.</p>
-                </div>
+                <form th:action="@{/login}" th:method="post" class="login-form">
+                    <div th:if="${param.error}" class="login-alert-error">
+                        <i class="fas fa-exclamation-circle error-icon"></i>
+                        <span>Credenciais inválidas. Por favor, tente novamente.</span>
+                    </div>
 
-                <input type="email" name="email" id="email" placeholder="Email" required>
-                <input type="password" name="password" id="password" placeholder="Senha" required>
-                <button class="btn-primary" type="submit">Entrar</button>
-            </form>
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" name="email" id="email" placeholder="nome@email.com" required autocomplete="email">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Senha</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" name="password" id="password" placeholder="Digite sua senha" required autocomplete="current-password">
+                        </div>
+                    </div>
+
+                    <button class="btn-login" type="submit">
+                        <span>Entrar no Painel</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </form>
+
+                <div class="login-footer">
+                    <a th:href="@{/}" class="back-to-site">
+                        <i class="fas fa-arrow-left"></i> Voltar para o site
+                    </a>
+                </div>
+            </div>
         </div>
     </main>
+
     <footer th:replace="~{fragments/footer}"></footer>
 </body>
 </html>
