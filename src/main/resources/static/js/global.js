@@ -10,11 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
         body.classList.toggle('navbar-scrolled', window.scrollY > 12);
     };
 
-    const syncNavbarHeight = () => {
-        body.style.setProperty('--navbar-height', `${header.offsetHeight}px`);
-    };
-
-    syncNavbarHeight();
     updateNavbarState();
 
     const toggleBtn = document.getElementById('navbar-toggle');
@@ -42,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     window.addEventListener('resize', () => {
-        syncNavbarHeight();
         updateNavbarState();
         
         if (window.innerWidth > 768) {

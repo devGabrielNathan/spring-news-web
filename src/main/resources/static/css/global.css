@@ -6,6 +6,7 @@
     --danger-color: #CB0003;
     --primary-text-color: white;
     --border-light: #e2e8f0;
+    --navbar-height: 96px;
 }
 
 * {
@@ -51,7 +52,8 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     color: #1f2933;
     line-height: 1.5;
-    padding-top: var(--navbar-height, 72px);
+    padding-top: var(--navbar-height, 96px);
+    overflow-anchor: none;
 }
 
 header {
