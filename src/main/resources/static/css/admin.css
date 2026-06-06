@@ -212,7 +212,6 @@
 .status-badge {
     display: inline-flex;
     align-items: center;
-    padding: 0.3rem 0.75rem;
     font-size: 0.75rem;
     font-weight: 700;
     border-radius: 50px;
@@ -222,27 +221,19 @@
 }
 
 .status-escrita {
-    background-color: #eff6ff;
     color: #1d4ed8;
-    border: 1px solid #bfdbfe;
 }
 
 .status-aprovada {
-    background-color: #ecfdf5;
     color: #047857;
-    border: 1px solid #a7f3d0;
 }
 
 .status-rejeitada {
-    background-color: #fef2f2;
     color: #b91c1c;
-    border: 1px solid #fecaca;
 }
 
 .status-arquivada {
-    background-color: #f8fafc;
     color: #475569;
-    border: 1px solid #e2e8f0;
 }
 
 .action-btn {

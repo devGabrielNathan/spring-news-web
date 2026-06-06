@@ -173,32 +173,6 @@ body.admin-news-page .admin-main-content {
     gap: 0.75rem;
 }
 
-.filter-clear-btn {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: 1px solid var(--border-light);
-    background-color: #ffffff;
-    color: #94a3b8;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-    font-size: 0.8rem;
-}
-
-.filter-clear-btn:hover {
-    background-color: #fef2f2;
-    border-color: #fecaca;
-    color: #dc2626;
-}
-
-.filter-clear-btn.hidden {
-    display: none;
-}
-
 .filter-chip {
     display: inline-flex;
     align-items: center;
@@ -312,7 +286,6 @@ body.admin-news-page .admin-main-content {
 .status-pill {
     display: inline-flex;
     align-items: center;
-    padding: 0.2rem 0.6rem;
     font-size: 0.7rem;
     font-weight: 700;
     border-radius: 9999px;
@@ -321,27 +294,19 @@ body.admin-news-page .admin-main-content {
 }
 
 .status-pill.status-escrita {
-    background-color: #eff6ff;
     color: #1d4ed8;
-    border: 1px solid #bfdbfe;
 }
 
 .status-pill.status-aprovada {
-    background-color: #ecfdf5;
     color: #047857;
-    border: 1px solid #a7f3d0;
 }
 
 .status-pill.status-rejeitada {
-    background-color: #fef2f2;
     color: #b91c1c;
-    border: 1px solid #fecaca;
 }
 
 .status-pill.status-arquivada {
-    background-color: #f8fafc;
     color: #475569;
-    border: 1px solid #e2e8f0;
 }
 
 .news-item-date {
