@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -22,8 +23,15 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String home(Model model) {
-        List<News> newsList = newsService.findByStatusOrderByPublicatedAtDesc(NewsStatus.APROVADA, PageRequest.of(0, 12));
+    public String home(@RequestParam(name = "q", required = false) String searchQuery, Model model) {
+        List<News> newsList;
+
+        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+            newsList = newsService.searchByStatusAndTitleOrResume(NewsStatus.APROVADA, searchQuery);
+            model.addAttribute("searchQuery", searchQuery);
+        } else {
+            newsList = newsService.findByStatusOrderByPublicatedAtDesc(NewsStatus.APROVADA, PageRequest.of(0, 12));
+        }
 
         model.addAttribute("newsList", newsList);
 

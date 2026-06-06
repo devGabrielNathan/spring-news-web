@@ -70,4 +70,8 @@ public class NewsService {
     public List<News> findByStatusOrderByPublicatedAtDesc(NewsStatus status, Pageable pageable) {
         return newsRepository.findByStatusOrderByPublicatedAtDesc(status, pageable).getContent();
     }
+
+    public List<News> searchByStatusAndTitleOrResume(NewsStatus status, String query) {
+        return newsRepository.searchByStatusAndTitleOrResume(status, query.trim());
+    }
 }
