@@ -97,6 +97,7 @@ body.admin-news-page .admin-main-content {
 .news-scroll-container {
     flex: 1;
     overflow-y: auto;
+    scrollbar-gutter: stable;
     padding: 2rem 2.5rem 3rem;
     display: flex;
     justify-content: center;

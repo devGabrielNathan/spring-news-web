@@ -91,6 +91,7 @@ body.admin-form-page {
 .editor-scroll-container {
     flex: 1;
     overflow-y: auto;
+    scrollbar-gutter: stable;
     padding: 3rem 2.5rem;
     display: flex;
     justify-content: center;
