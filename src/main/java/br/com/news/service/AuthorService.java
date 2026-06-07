@@ -6,6 +6,7 @@ import br.com.news.entity.Author;
 import br.com.news.mapper.AuthorMapper;
 import br.com.news.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,11 +15,13 @@ import java.util.List;
 public class AuthorService {
     private final AuthorRepository authorRepository;
     private final AuthorMapper authorMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AuthorService(AuthorRepository authorRepository, AuthorMapper authorMapper) {
+    public AuthorService(AuthorRepository authorRepository, AuthorMapper authorMapper, PasswordEncoder passwordEncoder) {
         this.authorRepository = authorRepository;
         this.authorMapper = authorMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<AuthorResponse> findAll() {
@@ -43,19 +46,28 @@ public class AuthorService {
 
     public AuthorResponse create(AuthorRequest request) {
         if (authorRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("");
+            throw new RuntimeException("E-mail já cadastrado");
         }
 
         Author author = authorMapper.toEntity(request);
+        author.setPassword(passwordEncoder.encode(request.getPassword()));
         return authorMapper.toResponse(authorRepository.save(author));
     }
 
     public AuthorResponse update(Long id, AuthorRequest request) {
-        authorRepository.findById(id).orElseThrow();
+        Author existingAuthor = authorRepository.findById(id).orElseThrow();
         Author updatedAuthor = authorMapper.toEntity(request);
         updatedAuthor.setId(id);
+        
+        if (request.getPassword() == null || request.getPassword().isBlank()) {
+            updatedAuthor.setPassword(existingAuthor.getPassword());
+        } else {
+            updatedAuthor.setPassword(passwordEncoder.encode(request.getPassword()));
+        }
+        
         return authorMapper.toResponse(authorRepository.save(updatedAuthor));
     }
+
 
     public void delete(Long id) {
         authorRepository.findById(id).orElseThrow();

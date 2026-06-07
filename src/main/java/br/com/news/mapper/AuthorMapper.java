@@ -54,4 +54,17 @@ public class AuthorMapper {
     public List<AuthorResponse> toResponseList(List<Author> authorEntities) {
         return authorEntities.stream().map(this::toResponse).toList();
     }
+
+    public AuthorRequest toRequest(AuthorResponse response) {
+        return new AuthorRequest(
+                response.getName(),
+                response.getEmail(),
+                "",
+                response.getBirthDate(),
+                response.getEducation(),
+                response.getSignature(),
+                response.isEditor(),
+                new java.util.ArrayList<>()
+        );
+    }
 }

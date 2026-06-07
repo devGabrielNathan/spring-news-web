@@ -19,7 +19,6 @@ public class AuthorRequest {
     @NotBlank
     private String email;
 
-    @NotBlank
     private String password;
 
     private LocalDate birthDate;
@@ -33,5 +32,5 @@ public class AuthorRequest {
     private boolean isEditor;
 
     @NotNull
-    private List<NewsRequest> news;
+    private List<NewsRequest> news = new java.util.ArrayList<>();
 }
