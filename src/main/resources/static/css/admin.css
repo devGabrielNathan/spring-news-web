@@ -727,7 +727,7 @@ body.admin-body {
     transform: rotate(180deg);
 }
 
-.admin-sidebar.collapsed ~ .admin-main-content {
+.admin-sidebar.collapsed~.admin-main-content {
     margin-left: 80px;
     width: calc(100% - 80px);
 }
@@ -750,25 +750,25 @@ body.admin-body {
         padding: 2rem 0.5rem !important;
         align-items: center !important;
     }
-    
+
     .sidebar-logo .logo-text,
     .sidebar-subtitle,
     .sidebar-link span,
     .sidebar-user .user-info {
         display: none !important;
     }
-    
+
     .sidebar-logo {
         justify-content: center !important;
         font-size: 1.75rem !important;
     }
-    
+
     .sidebar-link {
         justify-content: center !important;
         padding: 0.85rem !important;
         border-radius: 50% !important;
     }
-    
+
     .sidebar-user {
         padding: 0.5rem !important;
         justify-content: center !important;
@@ -779,11 +779,11 @@ body.admin-body {
         margin-bottom: 0 !important;
         border-color: transparent !important;
     }
-    
+
     .sidebar-user .user-avatar {
         font-size: 1.75rem !important;
     }
-    
+
     .admin-main-content {
         margin-left: 80px !important;
         width: calc(100% - 80px) !important;
@@ -795,23 +795,22 @@ body.admin-body {
         width: 60px !important;
         padding: 1.5rem 0.25rem !important;
     }
-    
+
     .admin-main-content {
         margin-left: 60px !important;
         width: calc(100% - 60px) !important;
     }
-    
+
     .sidebar-link {
         padding: 0.65rem !important;
     }
-    
+
     .sidebar-user {
         width: 36px !important;
         height: 36px !important;
     }
-    
+
     .sidebar-user .user-avatar {
         font-size: 1.5rem !important;
     }
 }
-
