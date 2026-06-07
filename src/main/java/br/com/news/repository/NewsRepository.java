@@ -30,4 +30,14 @@ public interface NewsRepository extends JpaRepository<News, Long> {
             "OR LOWER(n.resume) LIKE LOWER(CONCAT('%', :query, '%'))) " +
             "ORDER BY n.publicatedAt DESC")
     List<News> searchByStatusAndTitleOrResume(@Param("status") NewsStatus status, @Param("query") String query);
+
+    List<News> findByAuthorIdOrderByUpdatedAtDesc(Long authorId);
+
+    List<News> findByAuthorIdAndStatusOrderByUpdatedAtDesc(Long authorId, NewsStatus status);
+
+    @Query("SELECT n FROM News n WHERE n.author.id = :authorId " +
+            "AND (LOWER(n.title) LIKE LOWER(CONCAT('%', :query, '%')) " +
+            "OR LOWER(n.resume) LIKE LOWER(CONCAT('%', :query, '%'))) " +
+            "ORDER BY n.updatedAt DESC")
+    List<News> searchByAuthorIdAndTitleOrResume(@Param("authorId") Long authorId, @Param("query") String query);
 }

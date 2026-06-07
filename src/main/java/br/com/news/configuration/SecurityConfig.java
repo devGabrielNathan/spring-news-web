@@ -21,6 +21,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/", "/news/**", "/css/**", "/js/**", "/static/**", "/webjars/**", "/fontawesome/**").permitAll()
                 .requestMatchers("/login").permitAll()
+                .requestMatchers("/admin/authors/**").hasRole("EDITOR")
+                .requestMatchers("/admin/news/delete").hasRole("EDITOR")
                 .requestMatchers("/admin/**").authenticated()
                 .anyRequest().denyAll()
             )

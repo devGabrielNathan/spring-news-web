@@ -19,19 +19,33 @@ public class SecurityControllerAdvice {
     @ModelAttribute("isAuthenticated")
     public boolean isAuthenticated() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return auth != null && auth.isAuthenticated() && 
+        return auth != null && auth.isAuthenticated() &&
                !(auth instanceof AnonymousAuthenticationToken);
     }
 
     @ModelAttribute("currentUser")
     public Author currentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
-            Object principal = auth.getPrincipal();
-            if (principal instanceof Author) {
-                return (Author) principal;
-            }
+        if (auth == null || !auth.isAuthenticated() || auth instanceof AnonymousAuthenticationToken) {
+            return null;
+        }
+        Object principal = auth.getPrincipal();
+        if (principal instanceof Author) {
+            return (Author) principal;
         }
         return null;
+    }
+
+    @ModelAttribute("isEditor")
+    public boolean isEditor() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated() || auth instanceof AnonymousAuthenticationToken) {
+            return false;
+        }
+        Object principal = auth.getPrincipal();
+        if (principal instanceof Author author) {
+            return author.isEditor();
+        }
+        return false;
     }
 }
