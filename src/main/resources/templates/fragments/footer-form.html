@@ -3,10 +3,10 @@
     <th:block th:if="${isAuthorForm}">
         <div></div>
         <div class="footer-right">
-            <a th:href="@{/admin/authors}" class="btn-cancel-draft">
+            <button type="button" class="btn-cancel-draft" onclick="window.location.href='/admin/authors'">
                 <i class="fa-solid fa-xmark"></i>
                 <span>Cancelar</span>
-            </a>
+            </button>
             <button type="submit" form="author-form" class="btn-submit-review">
                 <i class="fa-solid fa-arrows-rotate"></i>
                 <span th:text="${authorId != null} ? 'Atualizar' : 'Criar'">Criar</span>
