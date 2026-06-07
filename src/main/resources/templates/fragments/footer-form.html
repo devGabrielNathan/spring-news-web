@@ -1,71 +1,100 @@
 <footer class="form-footer" th:fragment="footer" xmlns:th="http://www.thymeleaf.org">
 
     <th:block th:if="${isAuthorForm}">
-        <a th:href="@{/admin/authors}" class="btn-cancel-draft">
-            <i class="fa-solid fa-xmark"></i>
-            Cancelar
-        </a>
-        <button type="submit" form="author-form" class="btn-submit-review">
-            <i class="fa-solid fa-arrows-rotate"></i>
-            <span th:text="${authorId != null} ? 'Atualizar' : 'Criar'">Criar</span>
-        </button>
+        <div></div>
+        <div class="footer-right">
+            <a th:href="@{/admin/authors}" class="btn-cancel-draft">
+                <i class="fa-solid fa-xmark"></i>
+                <span>Cancelar</span>
+            </a>
+            <button type="submit" form="author-form" class="btn-submit-review">
+                <i class="fa-solid fa-arrows-rotate"></i>
+                <span th:text="${authorId != null} ? 'Atualizar' : 'Criar'">Criar</span>
+            </button>
+        </div>
     </th:block>
 
-    <th:block th:unless="${isAuthorForm}">
-        <th:block th:if="${newsId != null}">
-            <div class="footer-left">
-                <th:block th:if="${currentUser != null && news != null && currentUser.id == news.authorId}">
-                    <th:block th:if="${news?.status?.name() == 'ESCRITA'}">
-                        <button type="submit" form="news-form" onclick="document.getElementById('news-status-field').value='ARQUIVADA'" class="btn-cancel-draft">
-                            <i class="fa-solid fa-box-archive"></i> Arquivar
-                        </button>
-                        <button type="submit" form="news-form" onclick="document.getElementById('news-status-field').value='ESCRITA'" class="btn-submit-review">
-                            <i class="fa-solid fa-paper-plane"></i> Reenviar para Revisão
-                        </button>
-                    </th:block>
-
-                    <th:block th:if="${news?.status?.name() == 'ARQUIVADA'}">
-                        <button type="submit" form="news-form" onclick="document.getElementById('news-status-field').value='ARQUIVADA'" class="btn-cancel-draft">
-                            <i class="fa-solid fa-box-archive"></i> Arquivar novamente
-                        </button>
-                        <button type="submit" form="news-form" onclick="document.getElementById('news-status-field').value='ESCRITA'" class="btn-submit-review">
-                            <i class="fa-solid fa-paper-plane"></i> Enviar para Revisão
-                        </button>
-                    </th:block>
-                </th:block>
-            </div>
-
-            <div class="footer-right">
-                <th:block th:if="${isEditor && news != null && news?.status?.name() == 'ESCRITA'}">
+    <th:block th:unless="${isAuthorForm}" th:with="
+        showGroupA=${newsId == null || (currentUser != null && news != null && currentUser.id == news.authorId && (news?.status?.name() == 'ESCRITA' || news?.status?.name() == 'ARQUIVADA'))},
+        showGroupB=${newsId != null && isEditor && news != null && (news?.status?.name() == 'ESCRITA' || news?.status?.name() == 'ARQUIVADA')}
+    ">
+        <div class="footer-left">
+            <!-- Group B appears on the left ONLY if Group A is also shown -->
+            <th:block th:if="${showGroupA && showGroupB}">
+                <!-- Group B Buttons (Rejeitar / Aprovar) -->
+                <th:block th:if="${news?.status?.name() == 'ESCRITA'}">
                     <button type="submit" form="news-form" onclick="document.getElementById('news-status-field').value='REJEITADA'" class="btn-cancel-draft btn-reject-news">
-                        <i class="fa-solid fa-xmark"></i> Rejeitar
+                        <i class="fa-solid fa-xmark"></i> <span>Rejeitar</span>
                     </button>
                     <button type="submit" form="news-form" onclick="document.getElementById('news-status-field').value='APROVADA'" class="btn-submit-review btn-approve-news">
-                        <i class="fa-solid fa-check"></i> Aprovar
+                        <i class="fa-solid fa-check"></i> <span>Aprovar</span>
                     </button>
                 </th:block>
-
-                <th:block th:if="${isEditor && news != null && news?.status?.name() == 'ARQUIVADA'}">
+                <th:block th:if="${news?.status?.name() == 'ARQUIVADA'}">
                     <button type="button" class="btn-cancel-draft" disabled>
-                        <i class="fa-solid fa-xmark"></i> Rejeitar
+                        <i class="fa-solid fa-xmark"></i> <span>Rejeitar</span>
                     </button>
                     <button type="button" class="btn-submit-review" disabled>
-                        <i class="fa-solid fa-check"></i> Aprovar
+                        <i class="fa-solid fa-check"></i> <span>Aprovar</span>
                     </button>
                 </th:block>
-            </div>
-        </th:block>
+            </th:block>
+        </div>
 
-        <th:block th:if="${newsId == null}">
-            <div class="footer-left">
-                <button type="submit" form="news-form" onclick="document.getElementById('news-status-field').value='ARQUIVADA'" class="btn-cancel-draft">
-                    <i class="fa-solid fa-box-archive"></i> Arquivar
-                </button>
-                <button type="submit" form="news-form" onclick="const f = document.getElementById('news-status-field'); if(f) f.value='ESCRITA'" class="btn-submit-review">
-                    <i class="fa-solid fa-paper-plane"></i> Enviar para Revisão
-                </button>
-            </div>
-        </th:block>
+        <div class="footer-right">
+            <!-- Group A appears on the right if showGroupA is true -->
+            <th:block th:if="${showGroupA}">
+                <!-- If newsId != null and user is the author -->
+                <th:block th:if="${newsId != null}">
+                    <th:block th:if="${news?.status?.name() == 'ESCRITA'}">
+                        <button type="submit" form="news-form" onclick="document.getElementById('news-status-field').value='ARQUIVADA'" class="btn-cancel-draft">
+                            <i class="fa-solid fa-box-archive"></i> <span>Arquivar</span>
+                        </button>
+                        <button type="submit" form="news-form" onclick="document.getElementById('news-status-field').value='ESCRITA'" class="btn-submit-review">
+                            <i class="fa-solid fa-paper-plane"></i> <span>Reenviar para Revisão</span>
+                        </button>
+                    </th:block>
+                    <th:block th:if="${news?.status?.name() == 'ARQUIVADA'}">
+                        <button type="submit" form="news-form" onclick="document.getElementById('news-status-field').value='ARQUIVADA'" class="btn-cancel-draft">
+                            <i class="fa-solid fa-box-archive"></i> <span>Arquivar novamente</span>
+                        </button>
+                        <button type="submit" form="news-form" onclick="document.getElementById('news-status-field').value='ESCRITA'" class="btn-submit-review">
+                            <i class="fa-solid fa-paper-plane"></i> <span>Enviar para Revisão</span>
+                        </button>
+                    </th:block>
+                </th:block>
+                <!-- If newsId == null (new news) -->
+                <th:block th:if="${newsId == null}">
+                    <button type="submit" form="news-form" onclick="document.getElementById('news-status-field').value='ARQUIVADA'" class="btn-cancel-draft">
+                        <i class="fa-solid fa-box-archive"></i> <span>Arquivar</span>
+                    </button>
+                    <button type="submit" form="news-form" onclick="const f = document.getElementById('news-status-field'); if(f) f.value='ESCRITA'" class="btn-submit-review">
+                        <i class="fa-solid fa-paper-plane"></i> <span>Enviar para Revisão</span>
+                    </button>
+                </th:block>
+            </th:block>
+
+            <!-- Group B appears on the right ONLY if Group A is NOT shown -->
+            <th:block th:if="${!showGroupA && showGroupB}">
+                <!-- Group B Buttons (Rejeitar / Aprovar) -->
+                <th:block th:if="${news?.status?.name() == 'ESCRITA'}">
+                    <button type="submit" form="news-form" onclick="document.getElementById('news-status-field').value='REJEITADA'" class="btn-cancel-draft btn-reject-news">
+                        <i class="fa-solid fa-xmark"></i> <span>Rejeitar</span>
+                    </button>
+                    <button type="submit" form="news-form" onclick="document.getElementById('news-status-field').value='APROVADA'" class="btn-submit-review btn-approve-news">
+                        <i class="fa-solid fa-check"></i> <span>Aprovar</span>
+                    </button>
+                </th:block>
+                <th:block th:if="${news?.status?.name() == 'ARQUIVADA'}">
+                    <button type="button" class="btn-cancel-draft" disabled>
+                        <i class="fa-solid fa-xmark"></i> <span>Rejeitar</span>
+                    </button>
+                    <button type="button" class="btn-submit-review" disabled>
+                        <i class="fa-solid fa-check"></i> <span>Aprovar</span>
+                    </button>
+                </th:block>
+            </th:block>
+        </div>
     </th:block>
 
 </footer>

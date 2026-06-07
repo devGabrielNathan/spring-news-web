@@ -382,3 +382,15 @@ body.admin-form-page {
         padding: 1.5rem 1rem;
     }
 }
+
+@media (max-width: 960px) {
+    .form-footer button span,
+    .form-footer a span {
+        display: none;
+    }
+    
+    .form-footer .btn-cancel-draft,
+    .form-footer .btn-submit-review {
+        padding: 0.65rem 1rem;
+    }
+}
