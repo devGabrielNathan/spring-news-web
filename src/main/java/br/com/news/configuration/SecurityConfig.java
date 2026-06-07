@@ -19,12 +19,12 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/news/**", "/css/**", "/js/**", "/static/**", "/webjars/**", "/fontawesome/**").permitAll()
+                .requestMatchers("/", "/news/**", "/css/**", "/js/**", "/static/**", "/webjars/**", "/fontawesome/**", "/error").permitAll()
                 .requestMatchers("/login").permitAll()
                 .requestMatchers("/admin/authors/**").hasRole("EDITOR")
                 .requestMatchers("/admin/news/delete").hasRole("EDITOR")
                 .requestMatchers("/admin/**").authenticated()
-                .anyRequest().denyAll()
+                .anyRequest().permitAll()
             )
             .formLogin(form -> form
                 .loginPage("/login")

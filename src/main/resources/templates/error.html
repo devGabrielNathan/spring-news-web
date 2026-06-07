@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: head(
+    title=~{::title},
+    links=~{::link}
+)}">
+    <title th:text="${status == 404} ? 'Página Não Encontrada - PostBlog' : (${status == 403} ? 'Acesso Negado - PostBlog' : 'Erro - PostBlog')">Erro - PostBlog</title>
+    <link rel="stylesheet" th:href="@{/css/error.css}"/>
+</head>
+
+<body class="error-page">
+    <header th:replace="~{fragments/navbar}"></header>
+
+    <main class="error-main">
+        <div class="error-container">
+            <div class="error-card">
+                <!-- Dynamic Illustration Icon based on HTTP Status -->
+                <div class="error-illustration" 
+                     th:classappend="${status == 403} ? 'status-403' : (${status == 404} ? 'status-404' : 'status-other')">
+                    <i th:if="${status == 404}" class="fa-solid fa-compass"></i>
+                    <i th:if="${status == 403}" class="fa-solid fa-lock"></i>
+                    <i th:if="${status != 404 and status != 403}" class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+
+                <!-- Dynamic Status Badge -->
+                <span class="error-code-badge" 
+                      th:classappend="${status == 403} ? 'status-403' : ''"
+                      th:text="'Erro ' + ${status != null ? status : 'Inesperado'}">Erro 404</span>
+
+                <!-- Dynamic Title -->
+                <h1 class="error-title" 
+                    th:text="${status == 404} ? 'Página não encontrada' : (${status == 403} ? 'Acesso negado' : 'Ocorreu um erro no sistema')">
+                    Página não encontrada
+                </h1>
+
+                <!-- Dynamic Description -->
+                <p class="error-desc" 
+                   th:text="${status == 404} ? 'Desculpe, a página que você está procurando não existe, foi removida ou teve seu endereço alterado.' : (${status == 403} ? 'Você não tem as permissões necessárias para acessar este recurso.' : 'Infelizmente, encontramos um problema inesperado no servidor. Por favor, tente novamente mais tarde.')">
+                    A página que você está procurando não pôde ser encontrada.
+                </p>
+
+                <!-- Dynamic Metadata Info (Path & Timestamp) if available -->
+                <div th:if="${path != null}" class="error-meta">
+                    <span th:text="'Caminho: ' + ${path}">Caminho: /caminho</span>
+                </div>
+
+                <div class="error-actions">
+                    <a href="/" class="btn-error-home">
+                        <i class="fa-solid fa-arrow-left"></i> Voltar para o Início
+                    </a>
+                    <button onclick="window.history.back()" class="back-to-previous">
+                        <i class="fa-solid fa-arrow-rotate-left"></i> Voltar para a página anterior
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/footer}"></footer>
+</body>
+
+</html>
