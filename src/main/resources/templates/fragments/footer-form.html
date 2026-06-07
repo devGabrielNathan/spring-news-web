@@ -1,39 +1,71 @@
 <footer class="form-footer" th:fragment="footer" xmlns:th="http://www.thymeleaf.org">
-    
-    <th:block th:if="${newsId != null}">
 
-        <th:block th:if="${news.status?.name() == 'ESCRITA'}">
-            <button type="submit" form="news-form" onclick="document.getElementById('news-status-field').value='ARQUIVADA'" class="btn-cancel-draft">
-                <i class="fa-solid fa-box-archive"></i> Arquivar
-            </button>
-            <button type="submit" form="news-form" onclick="document.getElementById('news-status-field').value='ESCRITA'" class="btn-submit-review">
-                <i class="fa-solid fa-paper-plane"></i> Reenviar para Revisão
-            </button>
-        </th:block>
-
-        <th:block th:if="${news.status?.name() == 'ARQUIVADA'}">
-            <button type="submit" form="news-form" onclick="document.getElementById('news-status-field').value='ARQUIVADA'" class="btn-cancel-draft">
-                <i class="fa-solid fa-box-archive"></i> Arquivar novamente
-            </button>
-            <button type="submit" form="news-form" onclick="document.getElementById('news-status-field').value='ESCRITA'" class="btn-submit-review">
-                <i class="fa-solid fa-paper-plane"></i> Enviar para Revisão
-            </button>
-        </th:block>
-
-        <th:block th:if="${news.status?.name() == 'APROVADA' || news.status?.name() == 'REJEITADA' || news.status == null}">
-            <button type="submit" form="news-form" class="btn-submit-review">
-                <i class="fa-solid fa-rotate"></i> Atualizar
-            </button>
-        </th:block>
+    <th:block th:if="${isAuthorForm}">
+        <a th:href="@{/admin/authors}" class="btn-cancel-draft">
+            <i class="fa-solid fa-xmark"></i>
+            Cancelar
+        </a>
+        <button type="submit" form="author-form" class="btn-submit-review">
+            <i class="fa-solid fa-arrows-rotate"></i>
+            <span th:text="${authorId != null} ? 'Atualizar' : 'Criar'">Criar</span>
+        </button>
     </th:block>
 
-    <th:block th:if="${newsId == null}">
-        <button type="submit" form="news-form" onclick="document.getElementById('news-status-field').value='ARQUIVADA'" class="btn-cancel-draft">
-            <i class="fa-solid fa-box-archive"></i> Arquivar
-        </button>
-        <button type="submit" form="news-form" onclick="const f = document.getElementById('news-status-field'); if(f) f.value='ESCRITA'" class="btn-submit-review">
-            <i class="fa-solid fa-paper-plane"></i> Enviar para Revisão
-        </button>
+    <th:block th:unless="${isAuthorForm}">
+        <th:block th:if="${newsId != null}">
+            <div class="footer-left">
+                <th:block th:if="${currentUser != null && news != null && currentUser.id == news.authorId}">
+                    <th:block th:if="${news?.status?.name() == 'ESCRITA'}">
+                        <button type="submit" form="news-form" onclick="document.getElementById('news-status-field').value='ARQUIVADA'" class="btn-cancel-draft">
+                            <i class="fa-solid fa-box-archive"></i> Arquivar
+                        </button>
+                        <button type="submit" form="news-form" onclick="document.getElementById('news-status-field').value='ESCRITA'" class="btn-submit-review">
+                            <i class="fa-solid fa-paper-plane"></i> Reenviar para Revisão
+                        </button>
+                    </th:block>
+
+                    <th:block th:if="${news?.status?.name() == 'ARQUIVADA'}">
+                        <button type="submit" form="news-form" onclick="document.getElementById('news-status-field').value='ARQUIVADA'" class="btn-cancel-draft">
+                            <i class="fa-solid fa-box-archive"></i> Arquivar novamente
+                        </button>
+                        <button type="submit" form="news-form" onclick="document.getElementById('news-status-field').value='ESCRITA'" class="btn-submit-review">
+                            <i class="fa-solid fa-paper-plane"></i> Enviar para Revisão
+                        </button>
+                    </th:block>
+                </th:block>
+            </div>
+
+            <div class="footer-right">
+                <th:block th:if="${isEditor && news != null && news?.status?.name() == 'ESCRITA'}">
+                    <button type="submit" form="news-form" onclick="document.getElementById('news-status-field').value='REJEITADA'" class="btn-cancel-draft btn-reject-news">
+                        <i class="fa-solid fa-xmark"></i> Rejeitar
+                    </button>
+                    <button type="submit" form="news-form" onclick="document.getElementById('news-status-field').value='APROVADA'" class="btn-submit-review btn-approve-news">
+                        <i class="fa-solid fa-check"></i> Aprovar
+                    </button>
+                </th:block>
+
+                <th:block th:if="${isEditor && news != null && news?.status?.name() == 'ARQUIVADA'}">
+                    <button type="button" class="btn-cancel-draft" disabled>
+                        <i class="fa-solid fa-xmark"></i> Rejeitar
+                    </button>
+                    <button type="button" class="btn-submit-review" disabled>
+                        <i class="fa-solid fa-check"></i> Aprovar
+                    </button>
+                </th:block>
+            </div>
+        </th:block>
+
+        <th:block th:if="${newsId == null}">
+            <div class="footer-left">
+                <button type="submit" form="news-form" onclick="document.getElementById('news-status-field').value='ARQUIVADA'" class="btn-cancel-draft">
+                    <i class="fa-solid fa-box-archive"></i> Arquivar
+                </button>
+                <button type="submit" form="news-form" onclick="const f = document.getElementById('news-status-field'); if(f) f.value='ESCRITA'" class="btn-submit-review">
+                    <i class="fa-solid fa-paper-plane"></i> Enviar para Revisão
+                </button>
+            </div>
+        </th:block>
     </th:block>
 
 </footer>

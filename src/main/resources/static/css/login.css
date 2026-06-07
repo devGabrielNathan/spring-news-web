@@ -185,15 +185,6 @@
     color: var(--primary-color);
 }
 
-.back-to-site i {
-    font-size: 0.75rem;
-    transition: transform 0.2s ease;
-}
-
-.back-to-site:hover i {
-    transform: translateX(-3px);
-}
-
 @keyframes loginShake {
     0%, 100% { transform: translateX(0); }
     20%, 60% { transform: translateX(-4px); }

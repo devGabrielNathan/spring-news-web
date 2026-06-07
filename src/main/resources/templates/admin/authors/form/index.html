@@ -1,10 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: head(
+    title=~{::title},
+    links=~{::link}
+)}">
+    <title th:text="${authorId != null} ? 'Atualizar Autor - PostBlog' : 'Criar Autor - PostBlog'">Criar Autor - PostBlog</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" th:href="@{/css/admin-form.css}">
 </head>
-<body>
+
+<body class="admin-form-page">
+
+    <div class="admin-layout">
+        <aside th:replace="~{fragments/navbar-admin :: navbar-admin(activePage='authors')}"></aside>
+
+        <main class="admin-main-content">
+
+            <header th:replace="~{fragments/navbar-form}"></header>
+
+            <div class="editor-scroll-container">
+                <div class="editor-form-wrapper">
+
+                    <div th:if="${error}" class="alert-error-message">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <span th:text="${error}">Erro ao salvar autor</span>
+                    </div>
+
+                    <form th:action="${authorId != null} ? @{/admin/authors/update(id=${authorId})} : @{/admin/authors/create}"
+                        th:object="${author}" method="POST" id="author-form" class="admin-form">
+
+                        <div class="form-group">
+                            <label for="name">Nome Completo</label>
+                            <input type="text" th:field="*{name}" id="name" required autofocus placeholder="Digite o nome completo do autor..." />
+                            <div class="field-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                                <i class="fa-solid fa-circle-exclamation"></i> Erro no nome
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input type="email" th:field="*{email}" id="email" required placeholder="Digite o e-mail (ex: autor@blog.com)..." />
+                            <div class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+                                <i class="fa-solid fa-circle-exclamation"></i> Erro no e-mail
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Senha</label>
+                            <input type="password" th:field="*{password}" id="password" th:required="${authorId == null}" placeholder="Digite a senha de acesso..." />
+                            <div class="field-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+                                <i class="fa-solid fa-circle-exclamation"></i> Erro na senha
+                            </div>
+                            <small th:if="${authorId != null}" class="form-text text-muted" style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.25rem; display: block;">
+                                Deixe em branco para manter a senha atual.
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="birthDate">Data de Nascimento</label>
+                            <input type="date" th:field="*{birthDate}" id="birthDate" />
+                            <div class="field-error" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}">
+                                <i class="fa-solid fa-circle-exclamation"></i> Erro na data de nascimento
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="education">Escolaridade / Formação</label>
+                            <input type="text" th:field="*{education}" id="education" required placeholder="Ex: Bacharel em Jornalismo, Especialista em Comunicação..." />
+                            <div class="field-error" th:if="${#fields.hasErrors('education')}" th:errors="*{education}">
+                                <i class="fa-solid fa-circle-exclamation"></i> Erro na escolaridade
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signature">Assinatura editorial</label>
+                            <input type="text" th:field="*{signature}" id="signature" required placeholder="Ex: Nome que aparecerá nas publicações..." />
+                            <div class="field-error" th:if="${#fields.hasErrors('signature')}" th:errors="*{signature}">
+                                <i class="fa-solid fa-circle-exclamation"></i> Erro na assinatura
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="isEditor">Função / Tipo de Conta</label>
+                            <select th:field="*{editor}" id="isEditor" required>
+                                <option th:value="false">Redator</option>
+                                <option th:value="true">Revisor</option>
+                            </select>
+                            <div class="field-error" th:if="${#fields.hasErrors('editor')}" th:errors="*{editor}">
+                                <i class="fa-solid fa-circle-exclamation"></i> Erro na função
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <footer th:replace="~{fragments/footer-form}"></footer>
+        </main>
+    </div>
 
 </body>
 </html>

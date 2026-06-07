@@ -105,17 +105,21 @@
                                     </div>
                                 </div>
                                 <div class="news-item-actions">
-                                    <a th:href="@{/admin/news/update(id=${news.id})}"
-                                       class="action-icon-btn edit-icon-btn"
-                                       title="Editar notícia">
-                                        <i class="fas fa-pen"></i>
-                                    </a>
-                                    <a th:href="@{/admin/news/delete(id=${news.id})}"
-                                       class="action-icon-btn delete-icon-btn"
-                                       title="Excluir notícia"
-                                       onclick="return confirm('Tem certeza que deseja excluir esta notícia?');">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
+                                    <th:block th:if="${isEditor || (currentUser != null && currentUser.id == news.author && (news.status.name() == 'ESCRITA' || news.status.name() == 'ARQUIVADA'))}">
+                                        <a th:href="@{/admin/news/update(id=${news.id})}"
+                                           class="action-icon-btn edit-icon-btn"
+                                           title="Editar notícia">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
+                                    </th:block>
+                                    <th:block th:if="${isEditor}">
+                                        <a th:href="@{/admin/news/delete(id=${news.id})}"
+                                           class="action-icon-btn delete-icon-btn"
+                                           title="Excluir notícia"
+                                           onclick="return confirm('Tem certeza que deseja excluir esta notícia?');">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </th:block>
                                 </div>
                             </div>
                         </article>

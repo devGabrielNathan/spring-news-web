@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="authors-header-right">
-                    <a class="btn-new-author" th:href="@{/admin/authors}" onclick="alert('Cadastro de novos autores em desenvolvimento.'); return false;">
+                    <a class="btn-new-author" th:href="@{/admin/authors/create}">
                         <i class="fas fa-plus"></i> Novo Autor
                     </a>
                 </div>
@@ -104,10 +104,9 @@
                                     </div>
                                 </div>
                                 <div class="author-item-actions">
-                                    <a href="#"
+                                    <a th:href="@{/admin/authors/update(id=${author.id})}"
                                        class="action-icon-btn edit-icon-btn"
-                                       title="Editar autor"
-                                       onclick="alert('Funcionalidade de edição de autores em desenvolvimento.'); return false;">
+                                       title="Editar autor">
                                         <i class="fas fa-pen"></i>
                                     </a>
                                     <a th:href="@{/admin/authors/delete(id=${author.id})}"

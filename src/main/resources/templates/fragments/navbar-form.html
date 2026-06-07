@@ -1,11 +1,11 @@
 <header class="form-header" th:fragment="navbar-form" xmlns:th="http://www.thymeleaf.org">
     <div class="form-header-left">
-        <a th:href="@{/admin/news}" class="form-back-btn" title="Voltar para Gerenciamento">
+        <a th:href="${isAuthorForm} ? @{/admin/authors} : @{/admin/news}" class="form-back-btn" title="Voltar para Gerenciamento">
             <i class="fa-solid fa-arrow-left"></i>
         </a>
         <div class="form-title-group">
-            <span class="form-title-text" th:text="${newsId != null} ? 'Atualizar Notícia' : 'Nova Notícia'">Nova
-                Notícia</span>
+            <span class="form-title-text" th:if="${isAuthorForm}" th:text="${authorId != null} ? 'Atualizar Autor' : 'Novo Autor'">Novo Autor</span>
+            <span class="form-title-text" th:unless="${isAuthorForm}" th:text="${newsId != null} ? 'Atualizar Notícia' : 'Nova Notícia'">Nova Notícia</span>
         </div>
     </div>
 </header>

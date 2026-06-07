@@ -25,7 +25,7 @@
             <i class="fa-solid fa-newspaper"></i>
             <span>Gerenciar Notícias</span>
         </a>
-        <a th:href="@{/admin/authors}" class="sidebar-link" th:classappend="${activePage == 'authors' ? 'active' : ''}">
+        <a th:if="${isEditor}" th:href="@{/admin/authors}" class="sidebar-link" th:classappend="${activePage == 'authors' ? 'active' : ''}">
             <i class="fa-solid fa-users"></i>
             <span>Gerenciar Autores</span>
         </a>
