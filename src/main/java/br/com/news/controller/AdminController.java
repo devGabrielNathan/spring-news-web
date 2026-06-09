@@ -143,13 +143,9 @@ public class AdminController {
     }
 
     @GetMapping("/admin/news/update")
-    public String updateForm(@RequestParam("id") Long id, Model model, @AuthenticationPrincipal Author currentUser) {
+    public String updateForm(@RequestParam("id") Long id, Model model) {
         try {
             News news = newsService.findEntityById(id);
-
-            if (!canEditNews(currentUser, news)) {
-                return "redirect:/admin/news";
-            }
 
             NewsRequest newsRequest = newsMapper.toRequest(newsMapper.toResponse(news));
             model.addAttribute("news", newsRequest);

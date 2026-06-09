@@ -13,6 +13,7 @@ import java.util.List;
 
 @Repository
 public interface NewsRepository extends JpaRepository<News, Long> {
+    boolean existsByTitle(String title);
 
     Page<News> findByStatusOrderByPublicatedAtDesc(NewsStatus status, Pageable pageable);
 

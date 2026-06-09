@@ -80,11 +80,10 @@
                     </form>
                 </div>
             </div>
-            <footer th:replace="~{fragments/footer-form}"></footer>
+            <th:block th:if="${isEditor || (currentUser != null && currentUser.id == news.authorId && (news.status == null ||  news.status.name() == 'ESCRITA' || news.status.name() == 'ARQUIVADA'))}">
+                <footer th:replace="~{fragments/footer-form}"></footer>
+            </th:block>
         </main>
-    </div>
-
-    </div>
     </div>
 </body>
 

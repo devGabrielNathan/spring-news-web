@@ -5,6 +5,7 @@ import br.com.news.dto.NewsResponse;
 import br.com.news.service.AuthorService;
 import br.com.news.service.NewsService;
 import br.com.news.util.NewsStatus;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,9 @@ public class NewsController {
     }
 
     @GetMapping("/news")
-    public String newsList(Model model) {
+    public String newsList(Model model, HttpServletRequest request) {
+
+        model.addAttribute("currentPath", request.getRequestURI());
         model.addAttribute("newsList", newsService.findByStatusOrderByPublicatedAtDesc(NewsStatus.APROVADA, PageRequest.of(0, 12)));
 
         return "public/news/index";

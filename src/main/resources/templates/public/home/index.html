@@ -19,53 +19,11 @@
                 <h1>Post<span class="hero-accent">Blog</span></h1>
                 <p>Explore as últimas notícias, análises detalhadas, artigos sobre tecnologia, desenvolvimento e muito mais.</p>
             </div>
-
-            <form class="home-search-box" th:action="@{/}" method="GET">
-                <i class="fas fa-search home-search-icon"></i>
-                <input type="text" name="q" id="home-search" class="home-search-input"
-                       placeholder="Buscar notícias por título ou resumo..."
-                       th:value="${searchQuery}" />
-            </form>
         </section>
-
-        <section class="home-feed content-wrapper-size">
-            <div class="feed-header">
-                <h2 class="feed-title">Notícias Recentes</h2>
-                <div class="feed-header-right">
-                    <span class="feed-count" th:if="${newsList != null}" th:text="${#lists.size(newsList)} + ' notícias disponíveis'">0 notícias</span>
-                    <button class="filter-clear-btn"
-                            th:if="${searchQuery != null}"
-                            onclick="window.location.href='/'"
-                            title="Limpar busca">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div th:if="${searchQuery != null}" class="home-search-results-info">
-                <span>Resultados para "<strong th:text="${searchQuery}">query</strong>"</span>
-                <a th:href="@{/}" class="clear-search-link">Limpar busca</a>
-            </div>
-
-            <div class="news-grid" th:if="${newsList != null and !newsList.isEmpty()}">
-                <th:block th:each="news : ${newsList}">
-                    <div th:replace="~{fragments/news-card :: card(${news})}"></div>
-                </th:block>
-            </div>
-
-            <div class="empty-feed-state" th:if="${newsList == null or newsList.isEmpty()}">
-                <div class="empty-illustration">
-                    <i class="far fa-newspaper"></i>
-                </div>
-                <h3 th:if="${searchQuery != null}">Nenhuma notícia encontrada</h3>
-                <h3 th:if="${searchQuery == null}">Nenhuma notícia publicada</h3>
-                <p th:if="${searchQuery != null}">Não encontramos resultados para a sua busca. Tente termos diferentes.</p>
-                <p th:if="${searchQuery == null}">Nossos autores ainda não publicaram nenhuma notícia. Volte em breve para conferir novas atualizações!</p>
-                <a th:if="${searchQuery != null}" th:href="@{/}" class="empty-back-link">
-                    <i class="fas fa-arrow-left"></i> Voltar para todas as notícias
-                </a>
-            </div>
-        </section>
+        <div th:replace="~{fragments/news-render}"></div>
+        <div class="flex-center" th:if="${newsList != null and !newsList.isEmpty()}">
+            <button class="btn-primary" onclick="window.location.href='news'">Ver mais</button>
+        </div>
     </main>
 
     <footer th:replace="~{fragments/footer}"></footer>
