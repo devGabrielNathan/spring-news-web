@@ -1,6 +1,6 @@
 <div th:fragment="news-render">
     <section class="home-hero content-wrapper-size">
-        <form class="home-search-box" th:action="@{/}" method="GET">
+        <form class="home-search-box" th:action="@{${currentPath}}" method="GET">
             <i class="fas fa-search home-search-icon"></i>
             <input type="text" name="q" id="home-search" class="home-search-input"
                    placeholder="Buscar notícias por título ou resumo..."
@@ -17,7 +17,7 @@
                 <span class="feed-count" th:if="${newsList != null}" th:text="${#lists.size(newsList)} + ' notícias disponíveis'">0 notícias</span>
                 <button class="filter-clear-btn"
                         th:if="${searchQuery != null}"
-                        onclick="window.location.href='/'"
+                        th:onclick="|window.location.href='@{${currentPath}}'|"
                         title="Limpar busca">
                     <i class="fas fa-times"></i>
                 </button>
@@ -26,7 +26,7 @@
 
         <div th:if="${searchQuery != null}" class="home-search-results-info">
             <span>Resultados para "<strong th:text="${searchQuery}">query</strong>"</span>
-            <a th:href="@{/}" class="clear-search-link">Limpar busca</a>
+            <a th:href="@{${currentPath}}" class="clear-search-link">Limpar busca</a>
         </div>
 
         <div class="news-grid" th:if="${newsList != null and !newsList.isEmpty()}">

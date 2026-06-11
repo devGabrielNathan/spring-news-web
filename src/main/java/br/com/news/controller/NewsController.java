@@ -2,6 +2,7 @@ package br.com.news.controller;
 
 import br.com.news.dto.AuthorResponse;
 import br.com.news.dto.NewsResponse;
+import br.com.news.entity.News;
 import br.com.news.service.AuthorService;
 import br.com.news.service.NewsService;
 import br.com.news.util.NewsStatus;
@@ -11,6 +12,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class NewsController {
@@ -25,10 +28,18 @@ public class NewsController {
     }
 
     @GetMapping("/news")
-    public String newsList(Model model, HttpServletRequest request) {
+    public String newsList(@RequestParam(name = "q", required = false) String searchQuery, Model model, HttpServletRequest request) {
+    List<News> newsList;
+
+        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+            newsList = newsService.searchByStatusAndTitleOrResume(NewsStatus.APROVADA, searchQuery);
+            model.addAttribute("searchQuery", searchQuery);
+        } else {
+            newsList = newsService.findByStatusOrderByPublicatedAtDesc(NewsStatus.APROVADA, PageRequest.of(0, 12));
+        }
 
         model.addAttribute("currentPath", request.getRequestURI());
-        model.addAttribute("newsList", newsService.findByStatusOrderByPublicatedAtDesc(NewsStatus.APROVADA, PageRequest.of(0, 12)));
+        model.addAttribute("newsList", newsList);
 
         return "public/news/index";
     }
