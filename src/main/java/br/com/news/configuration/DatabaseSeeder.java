@@ -23,13 +23,26 @@ public class DatabaseSeeder {
 
 		return args -> {
 
+			System.out.println("================================================================================");
+			System.out.println("=== \t\t\t\t\t Profile Mock ativado detectado \t\t\t\t\t ===");
+			System.out.println("=== \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t ===");
+			System.out.println("===   Desative no \"application.properties\" para evitar a inserção de dados   ===");
+			System.out.println("================================================================================");
+			System.out.println("=== \t\t\t\t\t Iniciando arquivo DatabaseSeeder \t\t\t\t\t ===");
+			System.out.println("=== \t\t\t Criando Autores e Notícias caso não existam \t\t\t\t ===");
+			System.out.println("=== \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t ===");
+
 			seedRedator(authorRepository, passwordEncoder);
-
 			seedRevisor(authorRepository, passwordEncoder);
-
 			seedAuthors(authorRepository, passwordEncoder);
+			System.out.println("=== \t\t\t\t\t\t Autores inicializados  \t\t\t\t\t\t ===");
 
 			seedNews(newsRepository, authorRepository);
+			System.out.println("=== \t\t\t\t\t\t Notícias inicializadas \t\t\t\t\t\t ===");
+
+			System.out.println("=== \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t ===");
+			System.out.println("=== \t\t\t\t\t Finalizando arquivo DatabaseSeeder \t\t\t\t ===");
+			System.out.println("================================================================================");
 		};
 	}
 
@@ -48,10 +61,7 @@ public class DatabaseSeeder {
 			redator.setEditor(false);
 
 			authorRepository.save(redator);
-			System.out.println(">>> Redator Admin criado com sucesso!");
-			return;
 		}
-		System.out.println(">>> Redator Admin já existe no banco de dados. Pulando criação.");
 	}
 
 	private void seedRevisor(AuthorRepository authorRepository, PasswordEncoder passwordEncoder) {
@@ -69,10 +79,7 @@ public class DatabaseSeeder {
 			revisor.setEditor(true);
 
 			authorRepository.save(revisor);
-			System.out.println(">>> Revisor Admin criado com sucesso!");
-			return;
 		}
-		System.out.println(">>> Revisor Admin já existe no banco de dados. Pulando criação.");
 	}
 
 	private void seedAuthors(AuthorRepository authorRepository, PasswordEncoder passwordEncoder) {
@@ -100,11 +107,7 @@ public class DatabaseSeeder {
 
 				authorRepository.save(author);
 
-				System.out.println(">>> " + authorNames[i] + " criado com sucesso!");
-				continue;
 			}
-
-			System.out.println(">>> " + authorNames[i] + " já existe no banco de dados.");
 		}
 	}
 
@@ -280,8 +283,6 @@ public class DatabaseSeeder {
 
 				news.setAuthor(author);
 				newsRepository.save(news);
-
-				System.out.println(">>> " + title[i] + " criado com sucesso!");
 			}
 		}
 	}
