@@ -37,7 +37,7 @@ public class SecurityConfig {
                     .logoutRequestMatcher(
                             PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/logout")
                     )
-                    .logoutSuccessUrl("/")
+                    .logoutSuccessUrl("/login")
                     .permitAll()
             )
             .sessionManagement(session -> session
