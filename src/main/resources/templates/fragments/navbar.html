@@ -9,11 +9,11 @@
 
         <div class="nav-links desktop-only">            
             <div th:if="${isAuthenticated}" class="auth-group">
-                <a class="nav-link" href="/admin"><i class="fa-solid fa-chart-line"></i>Painel</a>
+                <a class="nav-link" th:href="@{/admin}"><i class="fa-solid fa-chart-line"></i>Painel</a>
                 <span class="nav-divider"></span>
-                <a class="nav-link nav-link-danger" href="/logout"><i class="fa-solid fa-right-from-bracket"></i>Sair</a>
+                <a class="nav-link nav-link-danger" th:href="@{/logout}"><i class="fa-solid fa-right-from-bracket"></i>Sair</a>
             </div> 
-            <a th:unless="${isAuthenticated or isLoginPage}" class="nav-link" href="/login"><i class="fa-solid fa-right-to-bracket"></i>Entrar</a>
+            <a th:unless="${isAuthenticated or isLoginPage}" class="nav-link" th:href="@{/login}"><i class="fa-solid fa-right-to-bracket"></i>Entrar</a>
         </div>
 
         <button id="navbar-toggle" class="mobile-only" aria-label="Abrir menu">
@@ -25,14 +25,14 @@
 
     <div id="mobile-menu" class="mobile-menu mobile-only">
         <nav class="mobile-nav">
-            <a class="mobile-nav-link" href="/"><i class="fa-solid fa-house"></i> Início</a>
+            <a class="mobile-nav-link" th:href="@{/}"><i class="fa-solid fa-house"></i> Início</a>
             <div class="mobile-nav-divider"></div>
             
             <div th:if="${isAuthenticated}" class="mobile-auth-group">
-                <a class="mobile-nav-link" href="/admin"><i class="fa-solid fa-chart-line"></i> Painel</a>
-                <a class="mobile-nav-link mobile-logout" href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
+                <a class="mobile-nav-link" th:href="@{/admin}"><i class="fa-solid fa-chart-line"></i> Painel</a>
+                <a class="mobile-nav-link mobile-logout" th:href="@{/logout}"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
             </div>
-            <a th:unless="${isAuthenticated or isLoginPage}" class="mobile-nav-link mobile-login" href="/login"><i class="fa-solid fa-right-to-bracket"></i> Entrar</a>
+            <a th:unless="${isAuthenticated or isLoginPage}" class="mobile-nav-link mobile-login" th:href="@{/login}"><i class="fa-solid fa-right-to-bracket"></i> Entrar</a>
         </nav>
     </div>
     <div id="mobile-menu-overlay" class="mobile-menu-overlay mobile-only"></div>
